@@ -2,6 +2,8 @@
 #pragma version = 0.2
 #pragma IgorVersion = 6.37
 
+//Procedures which calculate the different Hamiltonians starting with the spin Hamiltonians
+
 //Iz matrix
 Function MakeIz(s)
 	STRUCT Spectrum &s
