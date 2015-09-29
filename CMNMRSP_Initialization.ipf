@@ -1,26 +1,30 @@
 #pragma rtGlobals=3		// Use modern global access method and strict wave access.
 #pragma version = 0.2
+#pragma IgorVersion = 6.37
 
 
+//Checks if ConMatNMRSimPro window has been made. 
+//If made brings to front, if not made, makes window
 
 Function CheckMainPanel()
-	DoWindow NMRSimuPro
+	DoWindow ConMatNMRSimPro
 	if(v_flag==1)
-		DoWindow/F NMRSimuPro
+		DoWindow/F ConMatNMRSimPro
 	elseif(v_flag==0)
-		Execute "NMRSimuPro()"
+		Execute "ConMatNMRSimPro()"
 	endif
 End
 
+//Initializes folders, variables, waves, and spectrum1 if it has not already been made
 
-
-Function InitializeNMRSimuPro()
+Function InitializeConMatNMRSimPro()
 	newdatafolder/o root:SpectrumSimulation
 	newdatafolder/o root:SpectrumSimulation:System
 	newdatafolder/o root:Spectrumsimulation:Energywaves
 	newdatafolder/o root:Spectrumsimulation:Eigenwaves
 	newdatafolder/o root:spectrumsimulation:WandHdep
 	newdatafolder/o root:spectrumsimulation:SavedSimulations
+	
 	setdatafolder root:SpectrumSimulation:system
 			
 	//General parameters
@@ -409,14 +413,22 @@ Function Samestring(string1, string2)
 End
 
 	
-Window NMRSimuPro() : Panel
+Window ConMatNMRSimPro() : Panel
 
 	PauseUpdate; Silent 1		// building window...
 	NewPanel /W=(0,0,1100,720)
-	ShowInfo/W=SpectrumSimulationPanel
+	ShowInfo/W=ConMatNMRSimPro
 	SetDrawLayer UserBack
 	
+	ConMatNMRSimPro_Master()
+	
+End
+	
+
+Function ConMatNMRSimPro_Master()
+	
 	SetDataFolder root:SpectrumSimulation:
+	
 	Display/W=(233,99,1053,679)/HOST=#  root:spectrumsimulation:Spectrum1
 	ModifyGraph lSize=2
 	Label bottom "Frequencey (MHz)"
@@ -433,7 +445,6 @@ Window NMRSimuPro() : Panel
 	SetVariable setvargspectrumnumber,pos={10,65},size={85,15},proc=SetVariableSpectrumNumber,title="Spectrum"
 	SetVariable setvargspectrumnumber,limits={1,inf,1},value= root:SpectrumSimulation:System:gspectrumnumber
 	
-	
 	DrawText 97,79,"/"
 	SetDrawEnv fstyle= 5
 	ValDisplay valdispgspectrumcount,pos={100,65},size={50,13}
@@ -443,7 +454,7 @@ Window NMRSimuPro() : Panel
 	CheckBox checkgspectrumon,pos={140,65},size={62,14},proc=SpectrumOnandDisplay,title="Calcualte?"
 	CheckBox checkgspectrumon,variable= root:SpectrumSimulation:System:gspectrumon
 
-	SetVariable setvarggryo,pos={30,85},size={170,15},proc=SetVariableStats,title="Gyro Mat. Ratio (MHz/T)"
+	SetVariable setvarggryo,pos={30,85},size={170,15},proc=SetVariableStats,title="\F'Symbol'g \F'Arial' (MHz/T)"
 	SetVariable setvarggryo,value= root:SpectrumSimulation:System:ggyro
 
 	SetVariable setvargII,pos={65,105},size={100,15},proc=SetVariableStats,title="Nuclear Spin"
@@ -463,57 +474,56 @@ Window NMRSimuPro() : Panel
 	DrawText 63,180,"Magnetic Parameters"
 	SetDrawEnv fstyle= 1
 	
-	SetVariable setvargKiso,pos={10,190},size={100,15},proc=SetVariableKvalues,title="Kiso (%)"
+	SetVariable setvargKiso,pos={10,190},size={100,15},proc=SetVariableKvalues,title="K\Biso\M (%)"
 	SetVariable setvargKiso,value= root:SpectrumSimulation:System:gKiso
-	SetVariable setvargKaniso,pos={10,210},size={100,15},proc=SetVariableKvalues,title="Kaniso (%)"
+	SetVariable setvargKaniso,pos={10,210},size={100,15},proc=SetVariableKvalues,title="K\Baniso\M (%)"
 	SetVariable setvargKaniso,value= root:SpectrumSimulation:System:gKaniso
-	SetVariable setvargepsilon,pos={10,230},size={100,15},proc=SetVariableKvalues,title="Epsilon"
+	SetVariable setvargepsilon,pos={10,230},size={100,15},proc=SetVariableKvalues,title="\F'Symbol'e"
 	SetVariable setvargepsilon,value= root:SpectrumSimulation:System:gepsilon
 	
-	SetVariable setvargKz,pos={115,190},size={100,15},proc=SetVariableKvalues,title="Kz (%)"
+	SetVariable setvargKz,pos={115,190},size={100,15},proc=SetVariableKvalues,title="K\Bz\M (%)"
 	SetVariable setvargKz,value= root:SpectrumSimulation:System:gKz
-	SetVariable setvargKy,pos={115,210},size={100,15},proc=SetVariableKvalues,title="Ky (%)"
+	SetVariable setvargKy,pos={115,210},size={100,15},proc=SetVariableKvalues,title="K\By\M (%)"
 	SetVariable setvargKy,value= root:SpectrumSimulation:System:gKy
-	SetVariable setvargKx,pos={115,230},size={100,15},proc=SetVariableKvalues,title="Kx (%)"
+	SetVariable setvargKx,pos={115,230},size={100,15},proc=SetVariableKvalues,title="K\Bx\M (%)"
 	SetVariable setvargKx,value= root:SpectrumSimulation:System:gKx
 	
-	SetVariable setvargdvM,pos={50,250},size={100,15},proc=SetVariableStats,title="dvM (kHz)"
-	
+	SetVariable setvargdvM,pos={50,250},size={100,15},proc=SetVariableStats,title="dv\BM\M (kHz)"
 	SetVariable setvargdvM,value= root:SpectrumSimulation:System:gdVM
 
-	DrawText 45,285,"Orietation relative to Vzz"
+	DrawText 45,285,"Orietation relative to V\Bzz"
 	SetDrawEnv fstyle= 5
 		
-	SetVariable setvargthetaM,pos={50,290},size={100,15},proc=SetVariableStats,title="Theta (deg)"
+	SetVariable setvargthetaM,pos={50,290},size={100,15},proc=SetVariableStats,title="\F'Symbol'q \F'Arial'(deg)"
 	SetVariable setvargthetaM,value= root:SpectrumSimulation:System:gthetaM
-	SetVariable setvargPhiM,pos={50,310},size={100,15},proc=SetVariableStats,title="Phi (deg)"
+	SetVariable setvargPhiM,pos={50,310},size={100,15},proc=SetVariableStats,title="\F'Symbol'f \F'Arial'(deg)"
 	SetVariable setvargPhiM,value= root:SpectrumSimulation:System:gphiM
 	
 	//QuadupolarParameters
 	DrawText 50,345,"Quadrupolar Parameters"
 	SetDrawEnv fstyle= 5
 	
-	SetVariable setvargvQ,pos={50,350},size={100,15},proc=SetVariableStats,title="vQ (MHz)"
+	SetVariable setvargvQ,pos={50,350},size={100,15},proc=SetVariableStats,title="v\BQ\M (MHz)"
 	SetVariable setvargvQ,value= root:SpectrumSimulation:System:gvQ
-	SetVariable setvargeta,pos={50,370},size={100,15},proc=SetVariableStats,title="eta"
+	SetVariable setvargeta,pos={50,370},size={100,15},proc=SetVariableStats,title="\F'Symbol'h"
 	SetVariable setvargeta,value= root:SpectrumSimulation:System:geta	
-	SetVariable setvargdvQ,pos={50,390},size={100,15},proc=SetVariableStats,title="dvQ (kHz)"
+	SetVariable setvargdvQ,pos={50,390},size={100,15},proc=SetVariableStats,title="dv\BQ\M (kHz)"
 	SetVariable setvargdvQ,value= root:SpectrumSimulation:System:gdvQ
 
 	//AF parameters
 	DrawText 20,425,"Antiferromagnetic Parameters"
 	SetDrawEnv fstyle= 1
 	
-	SetVariable setvargvMAF,pos={50,430},size={100,15},proc=SetVariableStats,title="vMAF (MHz)"
+	SetVariable setvargvMAF,pos={50,430},size={100,15},proc=SetVariableStats,title="v\BMAF\M (MHz)"
 	SetVariable setvargvMAF,value= root:SpectrumSimulation:System:gvMAF
-	SetVariable setvargq,pos={50,450},size={100,15},proc=SetVariableStats,title="q (pi/2)"
+	SetVariable setvargq,pos={50,450},size={100,15},proc=SetVariableStats,title="q (\F'Symbol'p\F'Arial'/2)"
 	SetVariable setvargq,value= root:SpectrumSimulation:System:gq
 	
-	DrawText 45,490,"Orietation relative to Vzz"
+	DrawText 45,490,"Orietation relative to V\Bzz"
 	
-	SetVariable setvargthetaAF,pos={50,495},size={100,15},proc=SetVariableStats,title="Theta (deg)"
+	SetVariable setvargthetaAF,pos={50,495},size={100,15},proc=SetVariableStats,title="\F'Symbol'q\F'Arial' (deg)"
 	SetVariable setvargthetaAF,value= root:SpectrumSimulation:System:gthetaAF
-	SetVariable setvargPhiAF,pos={50,515},size={100,15},proc=SetVariableStats,title="Phi (deg)"
+	SetVariable setvargPhiAF,pos={50,515},size={100,15},proc=SetVariableStats,title="\F'Symbol'f\F'Arial' (deg)"
 	SetVariable setvargPhiAF,value= root:SpectrumSimulation:System:gphiAF
 	
 	SetVariable setvargtotalqsteps,pos={35,545},size={160,15},title="q steps for AF spectrum"
@@ -528,10 +538,8 @@ Window NMRSimuPro() : Panel
 	CheckBox checkgspectrumsumdisplay,pos={90,665},size={120,14},proc=SpectrumOnandDisplay,title="Display Spectrum Sum?"
 	CheckBox checkgspectrumsumdisplay,variable= root:SpectrumSimulation:System:gspectrumsumdisplay
 	
-
 	Button buttonDeleteSpectrum,pos={563,691},size={180,20},proc=DeleteCurrentSpectrum,title="Delete Current Spectrum"
 	Button buttonAutoScale,pos={972,687},size={80,20},proc=Autoscale,title="Auto Scale"
-
 
 	//Experiment Parameters
 	CheckBox checkgNQR,pos={180,45},size={36,14},proc=NQRFieldorFrequencySweep,title="NQR"
@@ -557,178 +565,6 @@ Window NMRSimuPro() : Panel
 	SetVariable setvargfieldsteps,pos={300,82},size={160,15},title="Field Steps for Field Sweep"
 	SetVariable setvargfieldsteps,value= root:SpectrumSimulation:System:gfieldsteps	
 	
-
-	//Res/Eigen vs parameters
-
-	CheckBox checkcalculateresonancevsparam,pos={861,79},size={234,14},title="Calculate Resonance and Eigen values vs params?"
-	CheckBox checkcalculateresonancevsparam,variable= root:SpectrumSimulation:System:gqandangdep
-	
-	PopupMenu popupEandEigen,pos={878,51},size={176,20},proc=DisplayEorEigenPopup
-	PopupMenu popupEandEigen,mode=1,popvalue="Resonance vs Parameters",value= #"\"Resonance vs Parameters;Eigen values vs Parameters\""
-
-	//Save/Load Spectra
-	
-	PopupMenu popupSaveData,pos={343,5},size={164,20},proc=SaveDataPopup,title="Save"
-	PopupMenu popupSaveData,mode=2,popvalue="All Waves and Data",value= #"\"Single Wave and Data;All Waves and Data\""
-	
-	PopupMenu popupLoadsingleSpectrumandData,pos={524,4},size={342,20},title="Load Single Spectrum and Data", proc=LoadDataPopup
-	PopupMenu popupLoadsingleSpectrumandData,mode=7,popvalue="OneSpec",value= #"ListofSimwavesinfolder()"
-
-	PopupMenu popupLoadgroupSpectrumandDat,pos={814,4},size={346,20},proc=LoadDataPopup,title="Load Group of Spectra and Data"
-	PopupMenu popupLoadgroupSpectrumandDat,mode=7,popvalue="MultiSpec",value= #"ListofAllSpecwavesinfolder()"
-
-
-EndMacro
-
-Function SpectrumSimulationMaster()
-
-	PauseUpdate; Silent 1		// building window...
-	NewPanel /W=(0,0,1100,720)
-//	ShowInfo/W=SpectrumSimulationPanel
-	SetDrawLayer UserBack
-	
-	SetDataFolder root:SpectrumSimulation:
-	Display/W=(233,99,1053,679)/HOST=#  root:spectrumsimulation:Spectrum1
-	ModifyGraph lSize=2
-	Label bottom "Frequencey (MHz)"
-	RenameWindow #,G0
-	SetActiveSubwindow ##
-
-	//General Parameters
-	TitleBox titlegnucleus,pos={60,5},size={77,40},fSize=30,frame=0
-	TitleBox titlegnucleus,variable= root:SpectrumSimulation:System:gnucleus
-
-	SetVariable setvargatomicmass,pos={50,45},size={105,15},proc=SetVariableNucleus,title="Atomic Mass"
-	SetVariable setvargatomicmass,limits={1,inf,1},value= root:SpectrumSimulation:System:gatomicmass
-
-	SetVariable setvargspectrumnumber,pos={10,65},size={85,15},proc=SetVariableSpectrumNumber,title="Spectrum"
-	SetVariable setvargspectrumnumber,limits={1,inf,1},value= root:SpectrumSimulation:System:gspectrumnumber
-	
-	
-	DrawText 97,79,"/"
-	SetDrawEnv fstyle= 5
-	ValDisplay valdispgspectrumcount,pos={100,65},size={50,13}
-	ValDisplay valdispgspectrumcount,limits={0,0,0},barmisc={0,1000},mode= 2	
-	ValDisplay valdispgspectrumcount,value= #"root:spectrumsimulation:system:gspectrumcount"	
-	
-	CheckBox checkgspectrumon,pos={140,65},size={62,14},proc=SpectrumOnandDisplay,title="Calcualte?"
-	CheckBox checkgspectrumon,variable= root:SpectrumSimulation:System:gspectrumon
-
-	SetVariable setvarggryo,pos={30,85},size={170,15},proc=SetVariableStats,title="Gyro Mat. Ratio (MHz/T)"
-	SetVariable setvarggryo,value= root:SpectrumSimulation:System:ggyro
-
-	SetVariable setvargII,pos={65,105},size={100,15},proc=SetVariableStats,title="Nuclear Spin"
-	SetVariable setvargII,value= root:SpectrumSimulation:System:gII
-	Button buttonTransitionPanel,pos={170,102},size={15,20},proc=TransitionPanelbutton,title="I"
-	
-	SetVariable setvargIntisity,pos={70,125},size={100,15},proc=SetVariableStats,title="Intensity"
-	SetVariable setvargIntisity,limits={0.001,inf,0.01},value= root:SpectrumSimulation:System:gintensity
-
-	SetVariable setvargbaseline,pos={70,145},size={110,15},proc=SetVariableStats,title="Baseline"
-	SetVariable setvargbaseline,limits={0,inf,0.01},value= root:SpectrumSimulation:System:gbaseline
-
-	SetVariable setvargspectrumpoints,pos={168,7},size={160,15},title="Spectrum Points 100*10^"
-	SetVariable setvargspectrumpoints,value= root:SpectrumSimulation:System:gspectrumpoints	
-
-	//Magnetic Paramters
-	DrawText 63,180,"Magnetic Parameters"
-	SetDrawEnv fstyle= 1
-	
-	SetVariable setvargKiso,pos={10,190},size={100,15},proc=SetVariableKvalues,title="Kiso (%)"
-	SetVariable setvargKiso,value= root:SpectrumSimulation:System:gKiso
-	SetVariable setvargKaniso,pos={10,210},size={100,15},proc=SetVariableKvalues,title="Kaniso (%)"
-	SetVariable setvargKaniso,value= root:SpectrumSimulation:System:gKaniso
-	SetVariable setvargepsilon,pos={10,230},size={100,15},proc=SetVariableKvalues,title="Epsilon"
-	SetVariable setvargepsilon,value= root:SpectrumSimulation:System:gepsilon
-	
-	SetVariable setvargKz,pos={115,190},size={100,15},proc=SetVariableKvalues,title="Kz (%)"
-	SetVariable setvargKz,value= root:SpectrumSimulation:System:gKz
-	SetVariable setvargKy,pos={115,210},size={100,15},proc=SetVariableKvalues,title="Ky (%)"
-	SetVariable setvargKy,value= root:SpectrumSimulation:System:gKy
-	SetVariable setvargKx,pos={115,230},size={100,15},proc=SetVariableKvalues,title="Kx (%)"
-	SetVariable setvargKx,value= root:SpectrumSimulation:System:gKx
-	
-	SetVariable setvargdvM,pos={50,250},size={100,15},proc=SetVariableStats,title="dvM (kHz)"
-	
-	SetVariable setvargdvM,value= root:SpectrumSimulation:System:gdVM
-
-	DrawText 45,285,"Orietation relative to Vzz"
-	SetDrawEnv fstyle= 5
-		
-	SetVariable setvargthetaM,pos={50,290},size={100,15},proc=SetVariableStats,title="Theta (deg)"
-	SetVariable setvargthetaM,value= root:SpectrumSimulation:System:gthetaM
-	SetVariable setvargPhiM,pos={50,310},size={100,15},proc=SetVariableStats,title="Phi (deg)"
-	SetVariable setvargPhiM,value= root:SpectrumSimulation:System:gphiM
-	
-	//QuadupolarParameters
-	DrawText 50,345,"Quadrupolar Parameters"
-	SetDrawEnv fstyle= 5
-	
-	SetVariable setvargvQ,pos={50,350},size={100,15},proc=SetVariableStats,title="vQ (MHz)"
-	SetVariable setvargvQ,value= root:SpectrumSimulation:System:gvQ
-	SetVariable setvargeta,pos={50,370},size={100,15},proc=SetVariableStats,title="eta"
-	SetVariable setvargeta,value= root:SpectrumSimulation:System:geta	
-	SetVariable setvargdvQ,pos={50,390},size={100,15},proc=SetVariableStats,title="dvQ (kHz)"
-	SetVariable setvargdvQ,value= root:SpectrumSimulation:System:gdvQ
-
-	//AF parameters
-	DrawText 20,425,"Antiferromagnetic Parameters"
-	SetDrawEnv fstyle= 1
-	
-	SetVariable setvargvMAF,pos={50,430},size={100,15},proc=SetVariableStats,title="vMAF (MHz)"
-	SetVariable setvargvMAF,value= root:SpectrumSimulation:System:gvMAF
-	SetVariable setvargq,pos={50,450},size={100,15},proc=SetVariableStats,title="q (pi/2)"
-	SetVariable setvargq,value= root:SpectrumSimulation:System:gq
-	
-	DrawText 45,490,"Orietation relative to Vzz"
-	
-	SetVariable setvargthetaAF,pos={50,495},size={100,15},proc=SetVariableStats,title="Theta (deg)"
-	SetVariable setvargthetaAF,value= root:SpectrumSimulation:System:gthetaAF
-	SetVariable setvargPhiAF,pos={50,515},size={100,15},proc=SetVariableStats,title="Phi (deg)"
-	SetVariable setvargPhiAF,value= root:SpectrumSimulation:System:gphiAF
-	
-	SetVariable setvargtotalqsteps,pos={35,545},size={160,15},title="q steps for AF spectrum"
-	SetVariable setvargtotalqsteps,value= root:SpectrumSimulation:System:gtotalqsteps
-
-	//Calculate and display
-
-	Button buttonCalculateSpectra,pos={54,613},size={120,20},proc=CalculateSpectra,title="Calculate Spectra"	
-	
-	CheckBox checkgspectrumdisplay,pos={90,645},size={54,14},proc=SpectrumOnandDisplay,title="Display?"
-	CheckBox checkgspectrumdisplay,variable= root:SpectrumSimulation:System:gspectrumdisplay
-	CheckBox checkgspectrumsumdisplay,pos={90,665},size={120,14},proc=SpectrumOnandDisplay,title="Display Spectrum Sum?"
-	CheckBox checkgspectrumsumdisplay,variable= root:SpectrumSimulation:System:gspectrumsumdisplay
-	
-
-	Button buttonDeleteSpectrum,pos={563,691},size={180,20},proc=DeleteCurrentSpectrum,title="Delete Current Spectrum"
-	Button buttonAutoScale,pos={972,687},size={80,20},proc=Autoscale,title="Auto Scale"
-
-
-	//Experiment Parameters
-	CheckBox checkgNQR,pos={180,45},size={36,14},proc=NQRFieldorFrequencySweep,title="NQR"
-	CheckBox checkgNQR,variable= root:SpectrumSimulation:System:gNQR
-	CheckBox checkgfrequencysweep,pos={225,45},size={94,14},proc=NQRFieldorFrequencySweep,title="Frequency Sweep"
-	CheckBox checkgfrequencysweep,variable= root:SpectrumSimulation:System:gfrequencysweep
-	CheckBox checkgfieldsweep,pos={225,65},size={69,14},proc=NQRFieldorFrequencySweep,title="Field Sweep"
-	CheckBox checkgfieldsweep,variable= root:SpectrumSimulation:System:gfieldsweep
-
-	SetVariable setvargfield,pos={345,45},size={95,15},proc=SetFieldorFrequency,title="Field (T)"
-	SetVariable setvargfield,value= root:SpectrumSimulation:System:gH0
-	SetVariable setvargfrequency,pos={309,65},size={130,15},proc=SetFieldorFrequency,title="Frequency (MHz)"
-	SetVariable setvargfrequency,value= root:SpectrumSimulation:System:gw0
-		
-	CheckBox checkgsinglecrystal,pos={475,45},size={77,14},proc=SingleCrystalorPowder,title="Single Crystal"
-	CheckBox checkgsinglecrystal,variable= root:SpectrumSimulation:System:gsinglecrystal
-	CheckBox checkgpowder,pos={475,65},size={50,14},proc=SingleCrystalorPowder,title="Powder"
-	CheckBox checkgpowder,variable= root:SpectrumSimulation:System:gpowder
-		
-	SetVariable setvargangularsteps,pos={475,82},size={160,15},title="Angular steps for powder"
-	SetVariable setvargangularsteps,value= root:SpectrumSimulation:System:gangularsteps
-	
-	SetVariable setvargfieldsteps,pos={300,82},size={160,15},title="Field Steps for Field Sweep"
-	SetVariable setvargfieldsteps,value= root:SpectrumSimulation:System:gfieldsteps	
-	
-
 	//Res/Eigen vs parameters
 
 	CheckBox checkcalculateresonancevsparam,pos={861,79},size={234,14},title="Calculate Resonance and Eigen values vs params?"
@@ -740,14 +576,12 @@ Function SpectrumSimulationMaster()
 	//Save Load Spectra	
 	
 	PopupMenu popupLoadsingleSpectrumandData,pos={524,4},size={342,20},title="Load Single Spectrum and Data"
-	PopupMenu popupLoadsingleSpectrumandData,mode=7,popvalue="PuCl6Powder14p5MHzAllSpec",value= #"Listofwavesinfolder()"
+	PopupMenu popupLoadsingleSpectrumandData,mode=7,popvalue="",value= #"Listofwavesinfolder()"
 	PopupMenu popupSaveData,pos={343,5},size={164,20},proc=SaveDataPopup,title="Save"
 	PopupMenu popupSaveData,mode=2,popvalue="All Waves and Data",value= #"\"Single Wave and Data;All Waves and Data\""
 
 	PopupMenu popupLoadgroupSpectrumandDat,pos={814,4},size={346,20},proc=LoadDataPopup,title="Load Group of Spectra and Data"
-	PopupMenu popupLoadgroupSpectrumandDat,mode=7,popvalue="PuCl6Powder14p5MHzAllSpec",value= #"Listofwavesinfolder()"
-
-
+	PopupMenu popupLoadgroupSpectrumandDat,mode=7,popvalue="",value= #"Listofwavesinfolder()"
 End
 
 Window ResonancevsParameterPanel() : Panel
