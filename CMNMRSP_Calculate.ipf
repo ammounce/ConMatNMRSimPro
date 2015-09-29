@@ -1,5 +1,11 @@
 #pragma rtGlobals=3		// Use modern global access method and strict wave access.
+#pragma version = 0.2
+#pragma IgorVersion = 6.37
 
+//Main calculation procedures and decision tree
+
+//Main calculation button, calculates all spectra with spectrum on selected
+//Reverts back to originally selected spectrum after calculation
 Function CalculateSpectra(ctrlname):Buttoncontrol
 	string ctrlname
 	
@@ -30,8 +36,8 @@ Function CalculateSpectra(ctrlname):Buttoncontrol
 	setdatafolder root:
 end
 
-
-
+//Calculates the energy levels of given spectrum
+//If transition is turned off values is set to nan
 Function CalculateEnergylevels(s)
 	STRUCT Spectrum &s
 
@@ -85,6 +91,13 @@ Function CalculateEnergylevels(s)
 		
 End
 
+
+//Calculates single spectrum
+//Only calculates HQ, Ix, Iy once
+//Sets the range of the calculated spectrum
+//Goes through decision tree to decide how to calculate the spectrum
+//Normalizes and sets intensity of spectrum
+//Calls calculation of anglar dependence if selected
 Function CalcSingleSpectrum(s)
 	STRUCT Spectrum &s
 	
@@ -241,7 +254,7 @@ storespectrumdata(s)
 End
 
 
-
+//Calculates simple NQR spectrum
 Function NQR(s)
 	STRUCT Spectrum &s
 
@@ -268,8 +281,8 @@ Function NQR(s)
 End
 
 
-
-
+//Calculates NQR plus AF spectrum
+//Half intensity for q=0
 Function NQRAF(s)
 	STRUCT Spectrum &s	
 
@@ -312,7 +325,7 @@ Function NQRAF(s)
 
 End
 
-
+//Simple NMR frequency sweep
 Function NMRfreqswpSC(s)
 	STRUCT Spectrum &s
 
@@ -339,6 +352,8 @@ Function NMRfreqswpSC(s)
 
 End
 
+//NMR frequency sweep for powder spectrum
+//Angular theta steps offset by 90/angularsteps^2 each phi step to increase efficiency
 FUnction NMRfreqswppowder(s)
 	STRUCT Spectrum &s	
 
@@ -388,6 +403,7 @@ FUnction NMRfreqswppowder(s)
 
 End
 
+//Single crystal NMR frequency sweep 
 Function NMRAFfreqswpSC(s)
 	STRUCT Spectrum &s
 					
@@ -425,9 +441,11 @@ Function NMRAFfreqswpSC(s)
 		print j, "/", s.totalqsteps
 	while (j<s.totalqsteps)
 			
-
 end
 
+//Powder NMR AF frequency sweep
+//Angular theta steps offset by 90/angularsteps^2 each phi step to increase efficiency
+//Half intensity for q=0
 Function NMRAFfreqswppowder(s)
 	STRUCT Spectrum &s
 	
@@ -481,7 +499,7 @@ Function NMRAFfreqswppowder(s)
 
 end	
 	
-	
+//Spin 1/2 field sweep, can simplify Hamiltonian
 Function NMRspin12fieldsweepSC(s)
 	STRUCT Spectrum &s
 
@@ -500,6 +518,7 @@ Function NMRspin12fieldsweepSC(s)
 			
 end
 
+//Spin 1/2 field sweep powder, can simplify Hamiltonian
 Function NMRspin12fieldsweeppowder(s)
 	STRUCT Spectrum &s
 	
@@ -535,6 +554,8 @@ Function NMRspin12fieldsweeppowder(s)
 
 end
 
+//I>1/2 field sweep for single crystal
+//Calculates resonance freq as a functino of field then interpolates to w0
 Function NMRfieldsweepSC(s)
 	STRUCT Spectrum &s
 	
@@ -581,6 +602,8 @@ Function NMRfieldsweepSC(s)
 
 end
 
+//I>1/2 field sweep for powder
+//Calculates resonance freq as a functino of field then interpolates to w0
 Function NMRfieldsweeppowder(s)
 	STRUCT Spectrum &s
 
@@ -650,6 +673,7 @@ Function NMRfieldsweeppowder(s)
 
 End
 
+//Calculates the angular dependence of the resonance frequency or eigenvalues
 Function  Calculateqandangledependence(s)
 	STRUCT Spectrum &s
 
@@ -840,7 +864,7 @@ Function  Calculateqandangledependence(s)
 	
 end
 
-
+//Yet to be complete resonance frequency and eigen values vs field
 Function CalculateResVsworH(s)
 	STRUCT spectrum &s
 	
