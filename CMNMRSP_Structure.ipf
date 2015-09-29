@@ -1,5 +1,10 @@
 #pragma rtGlobals=3		// Use modern global access method and strict wave access.
+#pragma version = 0.2
+#pragma IgorVersion = 6.37
 
+//Structure definition and initialization procedures
+
+//Main structure
 Structure Spectrum
 	
 	//General variables
@@ -25,8 +30,10 @@ Structure Spectrum
 	NVAR  t11_2on,  t9_2on,  t7_2on,  t5_2on,  t3_2on,  t1_2on,  tm1_2on,  tm3_2on, tm5_2on,  tm7_2on,  tm9_2on
 	NVAR  I11_2,  I9_2,  I7_2,  I5_2,  I3_2,  I1_2,  Im1_2,  Im3_2,  Im5_2,  Im7_2,  Im9_2
 	
+	//Hamiltonian tensors
 	wave/c Iz, Ix, Iy, I2, Ix2, Iy2, Iz2 ,Iplus, Iminus, Iplus2, Iminus2, product, HQ, HZ, HAF, Htotal
 	
+	//Simultion storage waves
 	wave nspec, nstats, spectrumsum, ntrans
 	
 	//Windowstrings
@@ -48,11 +55,13 @@ Structure Spectrum
 	wave/c Msquared
 	wave/t transname, inttransname, parameternamewave, statsnamewave
 	
+	//Nucleus information waves
 	wave nuclearspin, nucleargyro
 	wave/t nucleusname
 	
 Endstructure
 
+//Initilization function
 Function InitSpectrum(s)
 	STRUCT Spectrum &s
 
@@ -138,10 +147,12 @@ Function InitSpectrum(s)
 	NVAR s.Im7_2=root:spectrumsimulation:system:gIm7_2
 	NVAR s.Im9_2=root:spectrumsimulation:system:gIm9_2
 	
+	//Windows and panels
 	s.specwindow="SpectrumSimulationPanel#G0"
 	s.specname="Spectrum"+num2istr(s.spectrumnumber)
 	s.transpanelname="transitionspanel"
 	
+	//Hamiltonian tensors
 	wave/c s.Iz=root:spectrumsimulation:system:Iz
 	wave/c s.Iz2=root:spectrumsimulation:system:Iz2
 	wave/c s.Ix=root:spectrumsimulation:system:Ix
@@ -157,6 +168,7 @@ Function InitSpectrum(s)
 	wave/c s.Htotal=root:spectrumsimulation:system:Htotal
 	wave/c s.product=root:spectrumsimulation:system:m_product
 	
+	//Simulation waves
 	wave s.nspec=root:spectrumsimulation:$("Spectrum"+num2istr(s.spectrumnumber))
 	wave s.nstats=root:spectrumsimulation:$("StatsSpectrum"+num2istr(s.spectrumnumber))
 	
