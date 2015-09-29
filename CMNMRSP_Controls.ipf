@@ -97,7 +97,7 @@ Function CalculateSpectrumSum(s)
 	STRUCT spectrum &s		
 	variable initialspectrumnumber=s.spectrumnumber
 	
-	make/o/n=(100*10^s.spectrumpoints+1) root:spectrumsimulation:system:$("SpectrumSum")=0
+	make/o/n=(100*10^s.spectrumpoints+1) root:ConMatNMRSimPro:system:$("SpectrumSum")=0
 	
 	variable maxx=0, minx=1000000000, i=0
 	
@@ -420,8 +420,8 @@ Function SetVariableSpectrumNumber(ctrlName,varNum,varStr,varName) : SetVariable
 			spec.spectrumnumber-=1
 			return 0
 		elseif(addspectrumprompt==1)			
-			duplicate/o root:spectrumsimulation:$("Spectrum"+num2istr(spec.spectrumnumber-1)), root:spectrumsimulation:$("Spectrum"+num2istr(spec.spectrumnumber))
-			duplicate/o root:spectrumsimulation:$("StatsSpectrum"+num2istr(spec.spectrumnumber-1)), root:spectrumsimulation:$("StatsSpectrum"+num2istr(spec.spectrumnumber))
+			duplicate/o root:ConMatNMRSimPro:$("Spectrum"+num2istr(spec.spectrumnumber-1)), root:ConMatNMRSimPro:$("Spectrum"+num2istr(spec.spectrumnumber))
+			duplicate/o root:ConMatNMRSimPro:$("StatsSpectrum"+num2istr(spec.spectrumnumber-1)), root:ConMatNMRSimPro:$("StatsSpectrum"+num2istr(spec.spectrumnumber))
 
 			spec.spectrumon=1
 			spec.spectrumdisplay=0
@@ -482,11 +482,11 @@ Function DeleteCurrentSpectrum(ctrlname):ButtonControl
 			removefromgraph/W=$(spec.specwindow) $("Spectrum"+num2istr(spec.spectrumnumber))
 		endif		
 		
-		Killwaves/Z root:spectrumsimulation:$("Spectrum"+num2istr(spec.spectrumnumber)),spectrumref,root:spectrumsimulation:$("StatsSpectrum"+num2istr(spec.spectrumnumber))
-		Killwaves/Z root:spectrumsimulation:$("Energyvsq"+num2istr(spec.spectrumnumber)), root:spectrumsimulation:$("Energyvstheta"+num2istr(spec.spectrumnumber))
-		Killwaves/Z root:spectrumsimulation:$("Energyvsphi"+num2istr(spec.spectrumnumber)), root:spectrumsimulation:$("Energyvsthetaphi"+num2istr(spec.spectrumnumber))
-		Killwaves/Z root:spectrumsimulation:$("Eigenvaluesvsq"+num2istr(spec.spectrumnumber)), root:spectrumsimulation:$("Eigenvaluesvstheta"+num2istr(spec.spectrumnumber))
-		Killwaves/Z root:spectrumsimulation:$("Eigenvaluesvsphi"+num2istr(spec.spectrumnumber)), root:spectrumsimulation:$("Eigenvaluesvsthetaphi"+num2istr(spec.spectrumnumber))
+		Killwaves/Z root:ConMatNMRSimPro:$("Spectrum"+num2istr(spec.spectrumnumber)),spectrumref,root:ConMatNMRSimPro:$("StatsSpectrum"+num2istr(spec.spectrumnumber))
+		Killwaves/Z root:ConMatNMRSimPro:$("Energyvsq"+num2istr(spec.spectrumnumber)), root:ConMatNMRSimPro:$("Energyvstheta"+num2istr(spec.spectrumnumber))
+		Killwaves/Z root:ConMatNMRSimPro:$("Energyvsphi"+num2istr(spec.spectrumnumber)), root:ConMatNMRSimPro:$("Energyvsthetaphi"+num2istr(spec.spectrumnumber))
+		Killwaves/Z root:ConMatNMRSimPro:$("Eigenvaluesvsq"+num2istr(spec.spectrumnumber)), root:ConMatNMRSimPro:$("Eigenvaluesvstheta"+num2istr(spec.spectrumnumber))
+		Killwaves/Z root:ConMatNMRSimPro:$("Eigenvaluesvsphi"+num2istr(spec.spectrumnumber)), root:ConMatNMRSimPro:$("Eigenvaluesvsthetaphi"+num2istr(spec.spectrumnumber))
 
 		spec.spectrumcount-=1
 		spec.spectrumnumber-=1
@@ -505,7 +505,7 @@ End
 Function SaveCurrentSpectrum(ctrlname):ButtonControl
 	string ctrlname
 	
-	setdatafolder root:SpectrumSimulation
+	setdatafolder root:ConMatNMRSimPro
 	
 	variable/g gspectrumnumber
 	
@@ -539,7 +539,7 @@ Function changestatforallspectra(s)
 
 	do
 		i+=1
-		wave statwave=root:spectrumsimulation:$("StatsSpectrum" + num2istr(i))
+		wave statwave=root:ConMatNMRSimPro:$("StatsSpectrum" + num2istr(i))
 		statwave[6]=s.frequencysweep
 		statwave[7]=s.fieldsweep
 		statwave[9]=s.w0
@@ -557,7 +557,7 @@ Function LoadWaveandData(ctrlName,popNum,popStr) : PopupMenuControl
 	Variable popNum	// which item is currently selected (1-based)
 	String popStr		// contents of current popup item as string
 
-	setdatafolder root:SpectrumSimulation
+	setdatafolder root:ConMatNMRSimPro
 	
 	variable/g gspectrumnumber
 	
@@ -575,7 +575,7 @@ End
 Function ResnaonceorEvsparamterpanel(ctrlname):ButtonControl
 	string ctrlname
 	
-	setdatafolder root:SpectrumSimulation
+	setdatafolder root:ConMatNMRSimPro
 	
 	
 	string parameter
@@ -599,7 +599,7 @@ Function UpdateEigenandResWaves(s)
 	string parameter, value, panel
 	variable i=0, j=0, k=0
 
-	wave/t parameterref=root:SpectrumSimulation:Systemwaves:parameternamewave
+	wave/t parameterref=root:ConMatNMRSimPro:Systemwaves:parameternamewave
 //	do	
 	//	do
 			if(j==0 && k==0)
@@ -620,12 +620,12 @@ Function UpdateEigenandResWaves(s)
 			parameter=s.parameternamewave[j]
 			
 			if(k==0)
-				duplicate/o root:spectrumsimulation:energywaves:$(Value+parameter+num2istr(s.spectrumnumber)), root:SpectrumSimulation:System:$(Value+parameter)
+				duplicate/o root:ConMatNMRSimPro:energywaves:$(Value+parameter+num2istr(s.spectrumnumber)), root:ConMatNMRSimPro:System:$(Value+parameter)
 			elseif(k==1)
-				duplicate/o root:spectrumsimulation:eigenwaves:$(Value+parameter+num2istr(s.spectrumnumber)), root:SpectrumSimulation:System:$(Value+parameter)
+				duplicate/o root:ConMatNMRSimPro:eigenwaves:$(Value+parameter+num2istr(s.spectrumnumber)), root:ConMatNMRSimPro:System:$(Value+parameter)
 			endif
 			
-			wave Valuevsparamref=root:SpectrumSimulation:system:$( Value+parameter)
+			wave Valuevsparamref=root:ConMatNMRSimPro:system:$( Value+parameter)
 
 			string windowstring=panel+num2istr(j)
 
@@ -633,7 +633,7 @@ Function UpdateEigenandResWaves(s)
 						
 			do
 				removefromgraph/Z $(Value+parameter)
-				checkdisplayed/W=$windowstring root:SpectrumSimulation:Systemwaves:$(Value+parameter)
+				checkdisplayed/W=$windowstring root:ConMatNMRSimPro:Systemwaves:$(Value+parameter)
 				i+=1
 			while(v_flag==1)
 			
@@ -693,7 +693,7 @@ Function SaveDataPopup(ctrlName,popNum,popStr) : PopupMenuControl
 		if(v_flag==1)
 			return 0
 		elseif(v_flag==0)
-			wave newwaveref=root:spectrumsimulation:savedsimulations:$("Sim"+savewaveas)
+			wave newwaveref=root:ConMatNMRSimPro:savedsimulations:$("Sim"+savewaveas)
 			if(exists("root:"+savewaveas)==1)
 				variable deletepreviouswave
 				Prompt deletepreviouswave, "Delete Previous " + savewaveas, popup, "Yes;No"
@@ -702,8 +702,8 @@ Function SaveDataPopup(ctrlName,popNum,popStr) : PopupMenuControl
 					return 0
 				endif
 			endif
-			duplicate/o spec.nspec root:spectrumsimulation:savedsimulations:$("Sim"+savewaveas)				
-			duplicate/o spec.nstats, root:spectrumsimulation:savedsimulations:$("Stats"+savewaveas)
+			duplicate/o spec.nspec root:ConMatNMRSimPro:savedsimulations:$("Sim"+savewaveas)				
+			duplicate/o spec.nstats, root:ConMatNMRSimPro:savedsimulations:$("Stats"+savewaveas)
 		endif		
 	elseif(samestring(popstr, "All Waves and Data")==1)
 		initialspectrumnumber=spec.spectrumnumber
@@ -714,9 +714,9 @@ Function SaveDataPopup(ctrlName,popNum,popStr) : PopupMenuControl
 		if(v_flag==1)
 			return 0
 		elseif(v_flag==0)		
-			wave specsumref=root:spectrumsimulation:savedsimulations:$("AllSpec"+savewavesas)
-			wave allstatsref=root:spectrumsimulation:savedsimulations:$("AllStats"+savewavesas)
-			if(exists("root:spectrumsimulation:savedsimulations:AllSpec"+savewavesas)==1  || exists("root:spectrumsimulation:savedsimulations:AllStats"+savewavesas)==1)
+			wave specsumref=root:ConMatNMRSimPro:savedsimulations:$("AllSpec"+savewavesas)
+			wave allstatsref=root:ConMatNMRSimPro:savedsimulations:$("AllStats"+savewavesas)
+			if(exists("root:ConMatNMRSimPro:savedsimulations:AllSpec"+savewavesas)==1  || exists("root:ConMatNMRSimPro:savedsimulations:AllStats"+savewavesas)==1)
 				variable deletepreviouswaves
 				Prompt deletepreviouswaves, "Delete Previous " + savewavesas, popup, "Yes;No"
 				DoPrompt "Delete Wave?", deletepreviouswaves
@@ -725,11 +725,11 @@ Function SaveDataPopup(ctrlName,popNum,popStr) : PopupMenuControl
 				endif
 			endif
 
-			duplicate/o spec.nstats, root:spectrumsimulation:savedsimulations:$("AllStats"+savewavesas)
-			duplicate/o spec.nspec, root:spectrumsimulation:savedsimulations:$("AllSpec"+savewavesas)
-			wave newstatswaveref=root:spectrumsimulation:savedsimulations:$("AllStats"+savewavesas)
-			wave newspectrawaveref=root:spectrumsimulation:savedsimulations:$("AllSpec"+savewavesas)
-			wave oldspectrumref=root:SpectrumSimulation:$("Spectrum"+num2istr(spec.spectrumnumber))
+			duplicate/o spec.nstats, root:ConMatNMRSimPro:savedsimulations:$("AllStats"+savewavesas)
+			duplicate/o spec.nspec, root:ConMatNMRSimPro:savedsimulations:$("AllSpec"+savewavesas)
+			wave newstatswaveref=root:ConMatNMRSimPro:savedsimulations:$("AllStats"+savewavesas)
+			wave newspectrawaveref=root:ConMatNMRSimPro:savedsimulations:$("AllSpec"+savewavesas)
+			wave oldspectrumref=root:ConMatNMRSimPro:$("Spectrum"+num2istr(spec.spectrumnumber))
 
 			insertpoints/M=1 1, spec.spectrumcount-1,  newstatswaveref, newspectrawaveref
 
@@ -740,7 +740,7 @@ Function SaveDataPopup(ctrlName,popNum,popStr) : PopupMenuControl
 				newspectrawaveref[][spec.spectrumnumber-1]=spec.nspec[p][0]
 			while(spec.spectrumnumber<spec.spectrumcount)
 			
-			duplicate/o spec.spectrumsum, root:spectrumsimulation:savedsimulations:$("SpecSum"+savewavesas)			
+			duplicate/o spec.spectrumsum, root:ConMatNMRSimPro:savedsimulations:$("SpecSum"+savewavesas)			
 							
 			spec.spectrumnumber=initialspectrumnumber;initspectrum(spec)
 		
@@ -759,38 +759,38 @@ Function LoadDataPopup(ctrlName,popNum,popStr) : PopupMenuControl
 	variable i=0
 
 	if(samestring(ctrlname, "popupLoadsingleSpectrumandData")==1)
-		wave savedwaveref=root:spectrumsimulation:savedsimulations:$("Sim"+popstr)
-		duplicate/o savedwaveref, root:spectrumsimulation:$("Spectrum"+num2istr(spec.spectrumnumber))
-		wave savedstatsref=root::spectrumsimulation:savedsimulations:$("Stats"+popstr)
-		duplicate/o savedstatsref, root:spectrumsimulation:$("StatsSpectrum"+num2istr(spec.spectrumnumber))
+		wave savedwaveref=root:ConMatNMRSimPro:savedsimulations:$("Sim"+popstr)
+		duplicate/o savedwaveref, root:ConMatNMRSimPro:$("Spectrum"+num2istr(spec.spectrumnumber))
+		wave savedstatsref=root::ConMatNMRSimPro:savedsimulations:$("Stats"+popstr)
+		duplicate/o savedstatsref, root:ConMatNMRSimPro:$("StatsSpectrum"+num2istr(spec.spectrumnumber))
 		LoadSpectrumData(spec)
 	elseif(samestring(ctrlname, "popupLoadgroupSpectrumandDat")==1)
-		wave allspecref=root:spectrumsimulation:savedsimulations:$("AllSpec"+popstr)
-		wave allstatsref=root:spectrumsimulation:savedsimulations:$("AllStats"+popstr)
-		wave SpecSumref=root:spectrumsimulation:savedsimulations:$("SpecSum"+popstr)
+		wave allspecref=root:ConMatNMRSimPro:savedsimulations:$("AllSpec"+popstr)
+		wave allstatsref=root:ConMatNMRSimPro:savedsimulations:$("AllStats"+popstr)
+		wave SpecSumref=root:ConMatNMRSimPro:savedsimulations:$("SpecSum"+popstr)
 		print popstr
 		if(spec.spectrumcount>dimsize(allspecref,1))
 			do
 				removefromgraph/Z/W=$(spec.specwindow) $("Spectrum"+num2istr(spec.spectrumcount))
-				killwaves/Z root:spectrumsimulation:$("Spectrum"+num2str(spec.spectrumcount)), root:spectrumsimulation:$("StatsSpectrum"+num2str(spec.spectrumcount))
-				Killwaves/Z root:spectrumsimulation:energywaves:$("Energyvsq"+num2istr(spec.spectrumnumber)), root:spectrumsimulation:energywaves:$("Energyvstheta"+num2istr(spec.spectrumnumber))
-				Killwaves/Z root:spectrumsimulation:energywaves:$("Energyvsphi"+num2istr(spec.spectrumnumber)), root:spectrumsimulation:energywaves:$("Energyvsthetaphi"+num2istr(spec.spectrumnumber))
-				Killwaves/Z root:spectrumsimulation:eigenwaves:$("Eigenvaluesvsq"+num2istr(spec.spectrumnumber)), root:spectrumsimulation:eigenwaves:$("Eigenvaluesvstheta"+num2istr(spec.spectrumnumber))
-				Killwaves/Z root:spectrumsimulation:eigenwaves:$("Eigenvaluesvsphi"+num2istr(spec.spectrumnumber)), root:spectrumsimulation:eigenwaves:$("Eigenvaluesvsthetaphi"+num2istr(spec.spectrumnumber))
+				killwaves/Z root:ConMatNMRSimPro:$("Spectrum"+num2str(spec.spectrumcount)), root:ConMatNMRSimPro:$("StatsSpectrum"+num2str(spec.spectrumcount))
+				Killwaves/Z root:ConMatNMRSimPro:energywaves:$("Energyvsq"+num2istr(spec.spectrumnumber)), root:ConMatNMRSimPro:energywaves:$("Energyvstheta"+num2istr(spec.spectrumnumber))
+				Killwaves/Z root:ConMatNMRSimPro:energywaves:$("Energyvsphi"+num2istr(spec.spectrumnumber)), root:ConMatNMRSimPro:energywaves:$("Energyvsthetaphi"+num2istr(spec.spectrumnumber))
+				Killwaves/Z root:ConMatNMRSimPro:eigenwaves:$("Eigenvaluesvsq"+num2istr(spec.spectrumnumber)), root:ConMatNMRSimPro:eigenwaves:$("Eigenvaluesvstheta"+num2istr(spec.spectrumnumber))
+				Killwaves/Z root:ConMatNMRSimPro:eigenwaves:$("Eigenvaluesvsphi"+num2istr(spec.spectrumnumber)), root:ConMatNMRSimPro:eigenwaves:$("Eigenvaluesvsthetaphi"+num2istr(spec.spectrumnumber))
 				spec.spectrumcount-=1
 			while(spec.spectrumcount<dimsize(allspecref,1))
 		endif
 	
 		do
 			i+=1
-			duplicate/r=[][i-1]/o allstatsref, root:spectrumsimulation:$("StatsSpectrum"+num2istr(i))
-			duplicate/r=[][i-1]/o allspecref, root:spectrumsimulation:$("Spectrum"+num2istr(i));
+			duplicate/r=[][i-1]/o allstatsref, root:ConMatNMRSimPro:$("StatsSpectrum"+num2istr(i))
+			duplicate/r=[][i-1]/o allspecref, root:ConMatNMRSimPro:$("Spectrum"+num2istr(i));
 			spec.spectrumnumber=i; initspectrum(spec)
 			loadspectrumdata(spec)
-			setscale/i x spec.spectrumstart, spec.spectrumend,  root:spectrumsimulation:$("Spectrum"+num2istr(i))
+			setscale/i x spec.spectrumstart, spec.spectrumend,  root:ConMatNMRSimPro:$("Spectrum"+num2istr(i))
 		while(i<spec.spectrumcount)
 		
-		duplicate/o specsumref, root:spectrumsimulation:system:SpectrumSum
+		duplicate/o specsumref, root:ConMatNMRSimPro:system:SpectrumSum
 		
 		spec.spectrumcount=dimsize(allspecref, 1)
 		spec.spectrumnumber=1; initspectrum(spec)
@@ -804,11 +804,11 @@ end
 			removefromgraph/W=$(spec.specwindow) $("Spectrum"+num2istr(spec.spectrumnumber))
 		endif		
 		
-		Killwaves/Z root:spectrumsimulation:$("Spectrum"+num2istr(spec.spectrumnumber)),spectrumref,root:spectrumsimulation:$("StatsSpectrum"+num2istr(spec.spectrumnumber))
-		Killwaves/Z root:spectrumsimulation:$("Energyvsq"+num2istr(spec.spectrumnumber)), root:spectrumsimulation:$("Energyvstheta"+num2istr(spec.spectrumnumber))
-		Killwaves/Z root:spectrumsimulation:$("Energyvsphi"+num2istr(spec.spectrumnumber)), root:spectrumsimulation:$("Energyvsthetaphi"+num2istr(spec.spectrumnumber))
-		Killwaves/Z root:spectrumsimulation:$("Eigenvaluesvsq"+num2istr(spec.spectrumnumber)), root:spectrumsimulation:$("Eigenvaluesvstheta"+num2istr(spec.spectrumnumber))
-		Killwaves/Z root:spectrumsimulation:$("Eigenvaluesvsphi"+num2istr(spec.spectrumnumber)), root:spectrumsimulation:$("Eigenvaluesvsthetaphi"+num2istr(spec.spectrumnumber))
+		Killwaves/Z root:ConMatNMRSimPro:$("Spectrum"+num2istr(spec.spectrumnumber)),spectrumref,root:ConMatNMRSimPro:$("StatsSpectrum"+num2istr(spec.spectrumnumber))
+		Killwaves/Z root:ConMatNMRSimPro:$("Energyvsq"+num2istr(spec.spectrumnumber)), root:ConMatNMRSimPro:$("Energyvstheta"+num2istr(spec.spectrumnumber))
+		Killwaves/Z root:ConMatNMRSimPro:$("Energyvsphi"+num2istr(spec.spectrumnumber)), root:ConMatNMRSimPro:$("Energyvsthetaphi"+num2istr(spec.spectrumnumber))
+		Killwaves/Z root:ConMatNMRSimPro:$("Eigenvaluesvsq"+num2istr(spec.spectrumnumber)), root:ConMatNMRSimPro:$("Eigenvaluesvstheta"+num2istr(spec.spectrumnumber))
+		Killwaves/Z root:ConMatNMRSimPro:$("Eigenvaluesvsphi"+num2istr(spec.spectrumnumber)), root:ConMatNMRSimPro:$("Eigenvaluesvsthetaphi"+num2istr(spec.spectrumnumber))
 
 
 

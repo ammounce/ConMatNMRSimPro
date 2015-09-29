@@ -65,87 +65,87 @@ Endstructure
 Function InitSpectrum(s)
 	STRUCT Spectrum &s
 
-	SVAR s.nucleus=root:spectrumsimulation:system:gnucleus
+	SVAR s.nucleus=root:ConMatNMRSimPro:system:gnucleus
 	//General Variables	
-	NVAR s.atomicmass=root:spectrumsimulation:system:gatomicmass
-	NVAR s.altatomicmass=root:spectrumsimulation:system:galtatomicmass
-	NVAR s.previousmass=root:spectrumsimulation:system:gpreviousmass
-	NVAR s.II=root:spectrumsimulation:system:gII
-	NVAR s.gyro=root:spectrumsimulation:system:ggyro
-	NVAR s.w0=root:spectrumsimulation:system:gw0
-	NVAR s.H0=root:spectrumsimulation:system:gH0
-	NVAR  s.fieldsweep=root:spectrumsimulation:system:gfieldsweep
-	NVAR s.frequencysweep=root:spectrumsimulation:system:gfrequencysweep
-	NVAR  s.intensity=root:spectrumsimulation:system:gintensity
-	NVAR s.spectrumnumber=root:spectrumsimulation:system:gspectrumnumber
-	NVAR  s.spectrumon=root:spectrumsimulation:system:gspectrumon 
-	NVAR  s.spectrumdisplay=root:spectrumsimulation:system:gspectrumdisplay
-	NVAR  s.qandangdep=root:spectrumsimulation:system:gqandangdep
-	NVAR  s.NQR=root:spectrumsimulation:system:gNQR
-	NVAR s.powder=root:spectrumsimulation:system:gpowder
-	NVAR  s.singlecrystal=root:spectrumsimulation:system:gsinglecrystal
-	NVAR s.spectrumpoints=root:spectrumsimulation:system:gspectrumpoints
-	NVAR s.angularsteps=root:spectrumsimulation:system:gangularsteps
-	NVAR s.totalfieldsteps=root:spectrumsimulation:system:gfieldsteps
-	 NVAR s.baseline=root:spectrumsimulation:system:gbaseline
-	 NVAR s.spectrumsumdisplay=root:spectrumsimulation:system:gspectrumsumdisplay
-	 NVAR s.spectrumstart=root:spectrumsimulation:system:gspectrumstart
-	 NVAR  s.spectrumend=root:spectrumsimulation:system:gspectrumend
-	NVAR  s.spectrumcount=root:spectrumsimulation:system:gspectrumcount
-	NVAR s.oldbaseline=root:spectrumsimulation:system:goldbaseline	
+	NVAR s.atomicmass=root:ConMatNMRSimPro:system:gatomicmass
+	NVAR s.altatomicmass=root:ConMatNMRSimPro:system:galtatomicmass
+	NVAR s.previousmass=root:ConMatNMRSimPro:system:gpreviousmass
+	NVAR s.II=root:ConMatNMRSimPro:system:gII
+	NVAR s.gyro=root:ConMatNMRSimPro:system:ggyro
+	NVAR s.w0=root:ConMatNMRSimPro:system:gw0
+	NVAR s.H0=root:ConMatNMRSimPro:system:gH0
+	NVAR  s.fieldsweep=root:ConMatNMRSimPro:system:gfieldsweep
+	NVAR s.frequencysweep=root:ConMatNMRSimPro:system:gfrequencysweep
+	NVAR  s.intensity=root:ConMatNMRSimPro:system:gintensity
+	NVAR s.spectrumnumber=root:ConMatNMRSimPro:system:gspectrumnumber
+	NVAR  s.spectrumon=root:ConMatNMRSimPro:system:gspectrumon 
+	NVAR  s.spectrumdisplay=root:ConMatNMRSimPro:system:gspectrumdisplay
+	NVAR  s.qandangdep=root:ConMatNMRSimPro:system:gqandangdep
+	NVAR  s.NQR=root:ConMatNMRSimPro:system:gNQR
+	NVAR s.powder=root:ConMatNMRSimPro:system:gpowder
+	NVAR  s.singlecrystal=root:ConMatNMRSimPro:system:gsinglecrystal
+	NVAR s.spectrumpoints=root:ConMatNMRSimPro:system:gspectrumpoints
+	NVAR s.angularsteps=root:ConMatNMRSimPro:system:gangularsteps
+	NVAR s.totalfieldsteps=root:ConMatNMRSimPro:system:gfieldsteps
+	 NVAR s.baseline=root:ConMatNMRSimPro:system:gbaseline
+	 NVAR s.spectrumsumdisplay=root:ConMatNMRSimPro:system:gspectrumsumdisplay
+	 NVAR s.spectrumstart=root:ConMatNMRSimPro:system:gspectrumstart
+	 NVAR  s.spectrumend=root:ConMatNMRSimPro:system:gspectrumend
+	NVAR  s.spectrumcount=root:ConMatNMRSimPro:system:gspectrumcount
+	NVAR s.oldbaseline=root:ConMatNMRSimPro:system:goldbaseline	
 	
-	NVAR s.thetastep=root:spectrumsimulation:system:gthetastep
-	NVAR s.phistep=root:spectrumsimulation:system:gphistep
-	NVAR s.qstep=root:spectrumsimulation:system:gqstep
-	NVAR s.fieldstep=root:spectrumsimulation:system:gfieldstep
+	NVAR s.thetastep=root:ConMatNMRSimPro:system:gthetastep
+	NVAR s.phistep=root:ConMatNMRSimPro:system:gphistep
+	NVAR s.qstep=root:ConMatNMRSimPro:system:gqstep
+	NVAR s.fieldstep=root:ConMatNMRSimPro:system:gfieldstep
 	
 	//Magnetic variables	
-	NVAR  s.Kiso=root:spectrumsimulation:system:gKiso
-	NVAR s.Kaniso=root:spectrumsimulation:system:gKaniso
-	NVAR s.epsilon=root:spectrumsimulation:system:gepsilon
-	NVAR s.dvM=root:spectrumsimulation:system:gdVM
-	NVAR s.thetaM=root:spectrumsimulation:system:gthetaM
-	NVAR s.phiM=root:spectrumsimulation:system:gphiM
-	NVAR s.useKxyz=root:spectrumsimulation:system:guseKxyz
-	NVAR s.Kx=root:spectrumsimulation:system:gKx
-	NVAR s.Ky=root:spectrumsimulation:system:gKy
-	NVAR s.Kz=root:spectrumsimulation:system:gKz
+	NVAR  s.Kiso=root:ConMatNMRSimPro:system:gKiso
+	NVAR s.Kaniso=root:ConMatNMRSimPro:system:gKaniso
+	NVAR s.epsilon=root:ConMatNMRSimPro:system:gepsilon
+	NVAR s.dvM=root:ConMatNMRSimPro:system:gdVM
+	NVAR s.thetaM=root:ConMatNMRSimPro:system:gthetaM
+	NVAR s.phiM=root:ConMatNMRSimPro:system:gphiM
+	NVAR s.useKxyz=root:ConMatNMRSimPro:system:guseKxyz
+	NVAR s.Kx=root:ConMatNMRSimPro:system:gKx
+	NVAR s.Ky=root:ConMatNMRSimPro:system:gKy
+	NVAR s.Kz=root:ConMatNMRSimPro:system:gKz
 
 	//Quadrupolar variables
-	NVAR s.vQ=root:spectrumsimulation:system:gvQ
-	NVAR  s.eta=root:spectrumsimulation:system:geta
-	NVAR s.dvQ=root:spectrumsimulation:system:gdvQ
+	NVAR s.vQ=root:ConMatNMRSimPro:system:gvQ
+	NVAR  s.eta=root:ConMatNMRSimPro:system:geta
+	NVAR s.dvQ=root:ConMatNMRSimPro:system:gdvQ
 		
 	//AF variables	
-	NVAR s.vMAF=root:spectrumsimulation:system:gvMAF
-	NVAR s.q=root:spectrumsimulation:system:gq
-	NVAR  s.thetaAF=root:spectrumsimulation:system:gthetaAF
-	NVAR s.phiAF=root:spectrumsimulation:system:gphiAF
-	NVAR s.totalqsteps=root:spectrumsimulation:system:gtotalqsteps
+	NVAR s.vMAF=root:ConMatNMRSimPro:system:gvMAF
+	NVAR s.q=root:ConMatNMRSimPro:system:gq
+	NVAR  s.thetaAF=root:ConMatNMRSimPro:system:gthetaAF
+	NVAR s.phiAF=root:ConMatNMRSimPro:system:gphiAF
+	NVAR s.totalqsteps=root:ConMatNMRSimPro:system:gtotalqsteps
 
 	//Transitions
-	NVAR s.t11_2on=root:spectrumsimulation:system:g11_2on
-	NVAR s.t9_2on=root:spectrumsimulation:system:g9_2on
-	NVAR  s.t7_2on=root:spectrumsimulation:system:g7_2on
-	NVAR s.t5_2on=root:spectrumsimulation:system:g5_2on
-	NVAR  s.t3_2on=root:spectrumsimulation:system:g3_2on
-	NVAR  s.t1_2on=root:spectrumsimulation:system:g1_2on
-	NVAR  s.tm1_2on=root:spectrumsimulation:system:gm1_2on
-	NVAR  s.tm3_2on=root:spectrumsimulation:system:gm3_2on
-	NVAR s.tm5_2on=root:spectrumsimulation:system:gm5_2on
-	NVAR s.tm7_2on=root:spectrumsimulation:system:gm7_2on
-	NVAR s.tm9_2on=root:spectrumsimulation:system:gm9_2on
-	NVAR s.I11_2=root:spectrumsimulation:system:gI11_2
-	NVAR s.I9_2=root:spectrumsimulation:system:gI9_2
-	NVAR s.I7_2=root:spectrumsimulation:system:gI7_2
-	NVAR s.I5_2=root:spectrumsimulation:system:gI5_2 
-	NVAR s.I3_2=root:spectrumsimulation:system:gI3_2
-	NVAR s.I1_2=root:spectrumsimulation:system:gI1_2
-	NVAR  s.Im1_2=root:spectrumsimulation:system:gIm1_2
-	NVAR s.Im3_2=root:spectrumsimulation:system:gIm3_2
-	NVAR s.Im5_2=root:spectrumsimulation:system:gIm5_2
-	NVAR s.Im7_2=root:spectrumsimulation:system:gIm7_2
-	NVAR s.Im9_2=root:spectrumsimulation:system:gIm9_2
+	NVAR s.t11_2on=root:ConMatNMRSimPro:system:g11_2on
+	NVAR s.t9_2on=root:ConMatNMRSimPro:system:g9_2on
+	NVAR  s.t7_2on=root:ConMatNMRSimPro:system:g7_2on
+	NVAR s.t5_2on=root:ConMatNMRSimPro:system:g5_2on
+	NVAR  s.t3_2on=root:ConMatNMRSimPro:system:g3_2on
+	NVAR  s.t1_2on=root:ConMatNMRSimPro:system:g1_2on
+	NVAR  s.tm1_2on=root:ConMatNMRSimPro:system:gm1_2on
+	NVAR  s.tm3_2on=root:ConMatNMRSimPro:system:gm3_2on
+	NVAR s.tm5_2on=root:ConMatNMRSimPro:system:gm5_2on
+	NVAR s.tm7_2on=root:ConMatNMRSimPro:system:gm7_2on
+	NVAR s.tm9_2on=root:ConMatNMRSimPro:system:gm9_2on
+	NVAR s.I11_2=root:ConMatNMRSimPro:system:gI11_2
+	NVAR s.I9_2=root:ConMatNMRSimPro:system:gI9_2
+	NVAR s.I7_2=root:ConMatNMRSimPro:system:gI7_2
+	NVAR s.I5_2=root:ConMatNMRSimPro:system:gI5_2 
+	NVAR s.I3_2=root:ConMatNMRSimPro:system:gI3_2
+	NVAR s.I1_2=root:ConMatNMRSimPro:system:gI1_2
+	NVAR  s.Im1_2=root:ConMatNMRSimPro:system:gIm1_2
+	NVAR s.Im3_2=root:ConMatNMRSimPro:system:gIm3_2
+	NVAR s.Im5_2=root:ConMatNMRSimPro:system:gIm5_2
+	NVAR s.Im7_2=root:ConMatNMRSimPro:system:gIm7_2
+	NVAR s.Im9_2=root:ConMatNMRSimPro:system:gIm9_2
 	
 	//Windows and panels
 	s.specwindow="SpectrumSimulationPanel#G0"
@@ -153,77 +153,77 @@ Function InitSpectrum(s)
 	s.transpanelname="transitionspanel"
 	
 	//Hamiltonian tensors
-	wave/c s.Iz=root:spectrumsimulation:system:Iz
-	wave/c s.Iz2=root:spectrumsimulation:system:Iz2
-	wave/c s.Ix=root:spectrumsimulation:system:Ix
-	wave/c s.Iy=root:spectrumsimulation:system:Iy
-	wave/c s.I2=root:spectrumsimulation:system:I2
-	wave/c s.Iplus=root:spectrumsimulation:system:Iplus
-	wave/c s.Iminus=root:spectrumsimulation:system:Iminus
-	wave/c s.Iplus2=root:spectrumsimulation:system:Iplus2
-	wave/c s.Iminus2=root:spectrumsimulation:system:Iminus2
-	wave/c s.HQ=root:spectrumsimulation:system:HQ
-	wave/c s.HZ=root:spectrumsimulation:system:HZ
-	wave/c s.HAF=root:spectrumsimulation:system:HAF
-	wave/c s.Htotal=root:spectrumsimulation:system:Htotal
-	wave/c s.product=root:spectrumsimulation:system:m_product
+	wave/c s.Iz=root:ConMatNMRSimPro:system:Iz
+	wave/c s.Iz2=root:ConMatNMRSimPro:system:Iz2
+	wave/c s.Ix=root:ConMatNMRSimPro:system:Ix
+	wave/c s.Iy=root:ConMatNMRSimPro:system:Iy
+	wave/c s.I2=root:ConMatNMRSimPro:system:I2
+	wave/c s.Iplus=root:ConMatNMRSimPro:system:Iplus
+	wave/c s.Iminus=root:ConMatNMRSimPro:system:Iminus
+	wave/c s.Iplus2=root:ConMatNMRSimPro:system:Iplus2
+	wave/c s.Iminus2=root:ConMatNMRSimPro:system:Iminus2
+	wave/c s.HQ=root:ConMatNMRSimPro:system:HQ
+	wave/c s.HZ=root:ConMatNMRSimPro:system:HZ
+	wave/c s.HAF=root:ConMatNMRSimPro:system:HAF
+	wave/c s.Htotal=root:ConMatNMRSimPro:system:Htotal
+	wave/c s.product=root:ConMatNMRSimPro:system:m_product
 	
 	//Simulation waves
-	wave s.nspec=root:spectrumsimulation:$("Spectrum"+num2istr(s.spectrumnumber))
-	wave s.nstats=root:spectrumsimulation:$("StatsSpectrum"+num2istr(s.spectrumnumber))
+	wave s.nspec=root:ConMatNMRSimPro:$("Spectrum"+num2istr(s.spectrumnumber))
+	wave s.nstats=root:ConMatNMRSimPro:$("StatsSpectrum"+num2istr(s.spectrumnumber))
 	
-	wave s.energylevels=root:spectrumsimulation:system:energylevels
-	wave s.intensities=root:spectrumsimulation:system:intensities
-	wave s.w_eigenvalues=root:spectrumsimulation:system:w_eigenvalues
-	wave s.transon=root:spectrumsimulation:system:transon
-	wave s.transintensity=root:spectrumsimulation:system:transintensity
-	wave s.thetawave=root:spectrumsimulation:system:thetawave
-	wave s.phiwave=root:spectrumsimulation:system:phiwave
-	wave s.fieldsteps=root:spectrumsimulation:system:fieldsteps
-	wave s.FSenergylevels=root:spectrumsimulation:system:FSenergylevels
-	wave s.w0wave=root:spectrumsimulation:system:w0wave
-	wave s.interpwave=root:spectrumsimulation:system:interpwave
+	wave s.energylevels=root:ConMatNMRSimPro:system:energylevels
+	wave s.intensities=root:ConMatNMRSimPro:system:intensities
+	wave s.w_eigenvalues=root:ConMatNMRSimPro:system:w_eigenvalues
+	wave s.transon=root:ConMatNMRSimPro:system:transon
+	wave s.transintensity=root:ConMatNMRSimPro:system:transintensity
+	wave s.thetawave=root:ConMatNMRSimPro:system:thetawave
+	wave s.phiwave=root:ConMatNMRSimPro:system:phiwave
+	wave s.fieldsteps=root:ConMatNMRSimPro:system:fieldsteps
+	wave s.FSenergylevels=root:ConMatNMRSimPro:system:FSenergylevels
+	wave s.w0wave=root:ConMatNMRSimPro:system:w0wave
+	wave s.interpwave=root:ConMatNMRSimPro:system:interpwave
 	
-	wave s.nEvsq=root:spectrumsimulation:energywaves:$("Energyvsq"+num2istr(s.spectrumnumber))
-	wave s.nEvstheta=root:spectrumsimulation:energywaves:$("Energyvstheta"+num2istr(s.spectrumnumber))
-	wave s.nEvsphi=root:spectrumsimulation:energywaves:$("Energyvsphi"+num2istr(s.spectrumnumber))
-	wave s.nEvsthetaphi=root:spectrumsimulation:energywaves:$("Energyvsthetaphi"+num2istr(s.spectrumnumber))
-	wave s.nEVvsq=root:spectrumsimulation:eigenwaves:$("Eigenvaluesvsq"+num2istr(s.spectrumnumber))
-	wave s.nEVvstheta=root:SpectrumSimulation:Eigenwaves:$("Eigenvaluesvstheta"+num2istr(s.spectrumnumber))
-	wave s.nEVvsphi=root:spectrumsimulation:eigenwaves:$("Eigenvaluesvsphi"+num2istr(s.spectrumnumber))
-	wave s.nEVvsthetaphi=root:spectrumsimulation:eigenwaves:$("Eigenvaluesvsthetaphi"+num2istr(s.spectrumnumber))
+	wave s.nEvsq=root:ConMatNMRSimPro:energywaves:$("Energyvsq"+num2istr(s.spectrumnumber))
+	wave s.nEvstheta=root:ConMatNMRSimPro:energywaves:$("Energyvstheta"+num2istr(s.spectrumnumber))
+	wave s.nEvsphi=root:ConMatNMRSimPro:energywaves:$("Energyvsphi"+num2istr(s.spectrumnumber))
+	wave s.nEvsthetaphi=root:ConMatNMRSimPro:energywaves:$("Energyvsthetaphi"+num2istr(s.spectrumnumber))
+	wave s.nEVvsq=root:ConMatNMRSimPro:eigenwaves:$("Eigenvaluesvsq"+num2istr(s.spectrumnumber))
+	wave s.nEVvstheta=root:ConMatNMRSimPro:Eigenwaves:$("Eigenvaluesvstheta"+num2istr(s.spectrumnumber))
+	wave s.nEVvsphi=root:ConMatNMRSimPro:eigenwaves:$("Eigenvaluesvsphi"+num2istr(s.spectrumnumber))
+	wave s.nEVvsthetaphi=root:ConMatNMRSimPro:eigenwaves:$("Eigenvaluesvsthetaphi"+num2istr(s.spectrumnumber))
 
-	wave s.Evsq=root:spectrumsimulation:system:$("Energyvsq")
-	wave s.Evstheta=root:spectrumsimulation:system:$("Energyvstheta")
-	wave s.Evsphi=root:spectrumsimulation:system:$("Energyvsphi")
-	wave s.Evsthetaphi=root:spectrumsimulation:system:$("Energyvsthetaphi")
-	wave s.EVvsq=root:spectrumsimulation:system:$("Eigenvaluesvsq")
-	wave s.EVvstheta=root:spectrumsimulation:system:$("Eigenvaluesvstheta")
-	wave s.EVvsphi=root:spectrumsimulation:system:$("Eigenvaluesvsphi")
-	wave s.EVvsthetaphi=root:spectrumsimulation:system:$("Eigenvaluesvsthetaphi")
+	wave s.Evsq=root:ConMatNMRSimPro:system:$("Energyvsq")
+	wave s.Evstheta=root:ConMatNMRSimPro:system:$("Energyvstheta")
+	wave s.Evsphi=root:ConMatNMRSimPro:system:$("Energyvsphi")
+	wave s.Evsthetaphi=root:ConMatNMRSimPro:system:$("Energyvsthetaphi")
+	wave s.EVvsq=root:ConMatNMRSimPro:system:$("Eigenvaluesvsq")
+	wave s.EVvstheta=root:ConMatNMRSimPro:system:$("Eigenvaluesvstheta")
+	wave s.EVvsphi=root:ConMatNMRSimPro:system:$("Eigenvaluesvsphi")
+	wave s.EVvsthetaphi=root:ConMatNMRSimPro:system:$("Eigenvaluesvsthetaphi")
 
-	wave s.nresvsHtheta=root:spectrumsimulation:WandHdep:$("ResvsHtheta"+num2str(s.spectrumnumber))
-	wave s.nresvsHphi=root:spectrumsimulation:WandHdep:$("ResvsHphi"+num2str(s.spectrumnumber))
-	wave s.nresvsHthetaphi=root:spectrumsimulation:WandHdep:$("ResvsHthetaphi"+num2str(s.spectrumnumber))
+	wave s.nresvsHtheta=root:ConMatNMRSimPro:WandHdep:$("ResvsHtheta"+num2str(s.spectrumnumber))
+	wave s.nresvsHphi=root:ConMatNMRSimPro:WandHdep:$("ResvsHphi"+num2str(s.spectrumnumber))
+	wave s.nresvsHthetaphi=root:ConMatNMRSimPro:WandHdep:$("ResvsHthetaphi"+num2str(s.spectrumnumber))
 
-	wave/t parameternamewave=root:SpectrumSimulation:system:parameternamewave
-	wave/t s.parameternamewave=root:spectrumsimulation:system:parameternamewave
-	wave/t s.transname=root:spectrumsimulation:system:transname
-	wave/t s.inttransname=root:spectrumsimulation:system:inttransname
+	wave/t parameternamewave=root:ConMatNMRSimPro:system:parameternamewave
+	wave/t s.parameternamewave=root:ConMatNMRSimPro:system:parameternamewave
+	wave/t s.transname=root:ConMatNMRSimPro:system:transname
+	wave/t s.inttransname=root:ConMatNMRSimPro:system:inttransname
 	
-	wave s.energymatrix=root:spectrumsimulation:system:energymatrix
-	wave s.eigenvectors=root:spectrumsimulation:system:M_eigenvectors
-	wave s.teigenvectors=root:spectrumsimulation:system:teigenvectors
-	wave/c s.msquared=root:spectrumsimulation:system:msquared
-	wave s.EvsI=root:spectrumsimulation:system:EvsI
-	wave s.EvsH=root:spectrumsimulation:system:EvsH
-	wave s.IvsH=root:spectrumsimulation:system:IvsH
+	wave s.energymatrix=root:ConMatNMRSimPro:system:energymatrix
+	wave s.eigenvectors=root:ConMatNMRSimPro:system:M_eigenvectors
+	wave s.teigenvectors=root:ConMatNMRSimPro:system:teigenvectors
+	wave/c s.msquared=root:ConMatNMRSimPro:system:msquared
+	wave s.EvsI=root:ConMatNMRSimPro:system:EvsI
+	wave s.EvsH=root:ConMatNMRSimPro:system:EvsH
+	wave s.IvsH=root:ConMatNMRSimPro:system:IvsH
 	
-	wave s.spectrumsum=root:spectrumsimulation:system:spectrumsum
+	wave s.spectrumsum=root:ConMatNMRSimPro:system:spectrumsum
 	
-	wave/t s.statsnamewave=root:spectrumsimulation:system:statsnamewave
-	wave s.nuclearspin=root:spectrumsimulation:system:nuclearspin
-	wave s.nucleargyro=root:spectrumsimulation:system:nucleargyro
-	wave/t  s.nucleusname=root:spectrumsimulation:system:nucleusname
+	wave/t s.statsnamewave=root:ConMatNMRSimPro:system:statsnamewave
+	wave s.nuclearspin=root:ConMatNMRSimPro:system:nuclearspin
+	wave s.nucleargyro=root:ConMatNMRSimPro:system:nucleargyro
+	wave/t  s.nucleusname=root:ConMatNMRSimPro:system:nucleusname
 
 End

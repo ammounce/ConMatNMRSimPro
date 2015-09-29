@@ -21,14 +21,14 @@ End
 //Initializes folders, variables, waves, and spectrum1 if it has not already been made
 
 Function InitializeConMatNMRSimPro()
-	newdatafolder/o root:spectrumsimulation
-	newdatafolder/o root:spectrumsimulation:System
-	newdatafolder/o root:spectrumsimulation:Energywaves
-	newdatafolder/o root:spectrumsimulation:Eigenwaves
-	newdatafolder/o root:spectrumsimulation:WandHdep
-	newdatafolder/o root:spectrumsimulation:SavedSimulations
+	newdatafolder/o root:ConMatNMRSimPro
+	newdatafolder/o root:ConMatNMRSimPro:System
+	newdatafolder/o root:ConMatNMRSimPro:Energywaves
+	newdatafolder/o root:ConMatNMRSimPro:Eigenwaves
+	newdatafolder/o root:ConMatNMRSimPro:WandHdep
+	newdatafolder/o root:ConMatNMRSimPro:SavedSimulations
 	
-	setdatafolder root:spectrumsimulation:system
+	setdatafolder root:ConMatNMRSimPro:system
 			
 	//General parameters
 	variable/g gatomicmass, galtatomicmass, gII, ggyro, gw0, gH0, gfieldsweep, gfrequencysweep, gintensity=1, gspectrumnumber=1, gspectrumon , gspectrumdisplay, gqandangdep, gNQR
@@ -62,13 +62,13 @@ Function InitializeConMatNMRSimPro()
 	MakeNuclearGyroWave()
 	Makevariablewave()
 
-	make/t/o/n=(14,2) root:spectrumsimulation:system:TransName
-	wave/t transname	=root:spectrumsimulation:system:TransName
+	make/t/o/n=(14,2) root:ConMatNMRSimPro:system:TransName
+	wave/t transname	=root:ConMatNMRSimPro:system:TransName
 	transname[0][0]={"gt11_2on","gt9_2on","gt7_2on","gt5_2on","gt3_2on","gt1_2on","gtm1_2on","gtm3_2on","gtm5_2on","gtm7_2on","gtm9_2on"}
 	transname[0][1]={"gI11_2","gI9_2","gI7_2","gI5_2","gI3_2","gI1_2","gIm1_2","gIm3_2","gIm5_2","gIm7_2","gIm9_2"}
 
-	make/t/o/n=(14,2) root:spectrumsimulation:system:IntTransName
-	wave/t inttransname=root:spectrumsimulation:system:IntTransName
+	make/t/o/n=(14,2) root:ConMatNMRSimPro:system:IntTransName
+	wave/t inttransname=root:ConMatNMRSimPro:system:IntTransName
 	inttransname[0][0]={"gt7on", "gt6on", "gt5on", "gt4on", "gt3on", "gt2on", "gt1on", "gt0on", "gtm1on", "gtm2on", "gtm3on", "gtm4on", "gtm5on", "gtm6on"}
 	inttransname[0][1]={"gi7", "gi6", "gi5", "gi4", "gi3", "gi2", "gi1", "gi0", "gim1", "gim2", "gim3", "gim4", "gim5", "gim6"}
 
@@ -79,8 +79,8 @@ Function InitializeConMatNMRSimPro()
 	print spec.spectrumcount
 	
 	if(spec.spectrumcount==0)
-		make/o/n=(1000) root:spectrumsimulation:Spectrum1
-		wave defaultstatswave; duplicate/o defaultstatswave, root:spectrumsimulation:StatsSpectrum1		
+		make/o/n=(1000) root:ConMatNMRSimPro:Spectrum1
+		wave defaultstatswave; duplicate/o defaultstatswave, root:ConMatNMRSimPro:StatsSpectrum1		
 		spec.spectrumcount=1
 		Initspectrum(spec)
 		LoadSpectrumData(spec)
@@ -106,7 +106,7 @@ Function StoreSpectrumData(s)
 	
 	do
 		string varstring=s.statsnamewave[i]
-		NVAR var=root:spectrumsimulation:system:$varstring
+		NVAR var=root:ConMatNMRSimPro:system:$varstring
 	
 		s.nstats[i]=var			
 		i+=1
@@ -120,9 +120,9 @@ Function StoreSpectrumData(s)
 	
 	do
 		string onstring=transname[i-36][0]
-		NVAR onvar=root:spectrumsimulation:system:$onstring
+		NVAR onvar=root:ConMatNMRSimPro:system:$onstring
 		string intstring=transname[i-36][1]
-		NVAR intvar=root:spectrumsimulation:system:$intstring
+		NVAR intvar=root:ConMatNMRSimPro:system:$intstring
 		
 		if(numtype(onvar)!=2)
 			s.nstats[i]=onvar
@@ -148,7 +148,7 @@ Function LoadSpectrumData(s)
 	do
 		string varstring=s.statsnamewave[i]
 		
-		NVAR var=root:spectrumsimulation:system:$varstring
+		NVAR var=root:ConMatNMRSimPro:system:$varstring
 		var=s.nstats[i]		
 		
 		i+=1
@@ -162,9 +162,9 @@ Function LoadSpectrumData(s)
 		
 	do
 		string onstring=transname[i-36][0]
-		NVAR onvar=root:spectrumsimulation:system:$onstring
+		NVAR onvar=root:ConMatNMRSimPro:system:$onstring
 		string intstring=transname[i-36][1]
-		NVAR intvar=root:spectrumsimulation:system:$intstring
+		NVAR intvar=root:ConMatNMRSimPro:system:$intstring
 		
 		if(strlen(onstring)!=0)
 			onvar=s.nstats[i]
@@ -253,8 +253,8 @@ End
 //Makes wave that stores the variable names for main calculation stats
 Function Makevariablewave()
 
-	make/t/o/n=(36) root:spectrumsimulation:system:statsnamewave
- 	wave/t statsnamewaveref= root:spectrumsimulation:system:statsnamewave
+	make/t/o/n=(36) root:ConMatNMRSimPro:system:statsnamewave
+ 	wave/t statsnamewaveref= root:ConMatNMRSimPro:system:statsnamewave
   statsnamewaveref[0]="gspectrumon";statsnamewaveref[1]="gspectrumdisplay";statsnamewaveref[2]="gatomicmass";statsnamewaveref[3]="galtatomicmass";statsnamewaveref[4]="gII";statsnamewaveref[5]="ggyro";
 statsnamewaveref[6]="gfrequencysweep";statsnamewaveref[7]="gfieldsweep";statsnamewaveref[8]="gNQR";statsnamewaveref[9]="gw0";statsnamewaveref[10]="gH0";statsnamewaveref[11]="gsinglecrystal";
   statsnamewaveref[12]="gpowder";statsnamewaveref[13]="guseKxyz";statsnamewaveref[14]="gKiso";statsnamewaveref[15]="gKaniso";statsnamewaveref[16]="gepsilon";statsnamewaveref[17]="gKx";statsnamewaveref[18]="gKy";
@@ -285,7 +285,7 @@ End
 
 Function PrintStatwave()
 
-	wave/t Statsnamewaveref= root:spectrumsimulation:system:statsnamewave
+	wave/t Statsnamewaveref= root:ConMatNMRSimPro:system:statsnamewave
 	string printout
 	variable i
 	printout="statsnamewaveref["+num2istr(i)+"]="+statsnamewaveref[i]+";"
@@ -300,7 +300,7 @@ end
 
 
 Function listTransname()
-	wave/t nameref=root:spectrumsimulation:System:transonname
+	wave/t nameref=root:ConMatNMRSimPro:System:transonname
 	string namedisplay="transonname={"
 	
 	variable i=0
@@ -314,7 +314,7 @@ Function listTransname()
 	print namedisplay
 	i=0
 	
-	wave/t nameref=root:spectrumsimulation:System:transintensityname
+	wave/t nameref=root:ConMatNMRSimPro:System:transintensityname
 	namedisplay="transintensityname={"
 		
 	do
@@ -329,7 +329,7 @@ Function listTransname()
 end
 
 Function listvarname()
-	wave/t nameref=root:spectrumsimulation:System:statsnamewave
+	wave/t nameref=root:ConMatNMRSimPro:System:statsnamewave
 	
 	variable i=0
 	string namesdisplay
@@ -388,10 +388,10 @@ Function/s ListofSimwavesinFolder()
 	string list=""
 	variable numwaves,index=0
 	
-	numwaves = Countobjects("root:spectrumsimulation:savedsimulations:",1)
+	numwaves = Countobjects("root:ConMatNMRSimPro:savedsimulations:",1)
 	do
-		if(strsearch(GetIndexedObjName("root:spectrumsimulation:savedsimulations:", 1, index),"Sim",0)==0)
-			list=list + Replacestring("Sim", GetIndexedObjName("root:spectrumsimulation:savedsimulations:", 1, index), "")+";"
+		if(strsearch(GetIndexedObjName("root:ConMatNMRSimPro:savedsimulations:", 1, index),"Sim",0)==0)
+			list=list + Replacestring("Sim", GetIndexedObjName("root:ConMatNMRSimPro:savedsimulations:", 1, index), "")+";"
 		endif
 		index +=1
 	while(index < numwaves)
@@ -404,10 +404,10 @@ Function/s ListofAllSpecwavesinFolder()
 	string list=""
 	variable numwaves,index=0
 	
-	numwaves = Countobjects("root:spectrumsimulation:savedsimulations:",1)
+	numwaves = Countobjects("root:ConMatNMRSimPro:savedsimulations:",1)
 	do
-		if(strsearch(GetIndexedObjName("root:spectrumsimulation:savedsimulations:", 1, index),"AllSpec",0)==0)
-			list=list + Replacestring("AllSpec", GetIndexedObjName("root:spectrumsimulation:savedsimulations:", 1, index), "")+";"
+		if(strsearch(GetIndexedObjName("root:ConMatNMRSimPro:savedsimulations:", 1, index),"AllSpec",0)==0)
+			list=list + Replacestring("AllSpec", GetIndexedObjName("root:ConMatNMRSimPro:savedsimulations:", 1, index), "")+";"
 		endif
 		index +=1
 	while(index < numwaves)
@@ -447,9 +447,9 @@ End
 //Creates controls and main graph
 Function ConMatNMRSimPro_Master()
 	
-	SetDataFolder root:spectrumsimulation:
+	SetDataFolder root:ConMatNMRSimPro:
 	
-	Display/W=(233,99,1053,679)/HOST=#  root:spectrumsimulation:Spectrum1
+	Display/W=(233,99,1053,679)/HOST=#  root:ConMatNMRSimPro:Spectrum1
 	ModifyGraph lSize=2
 	Label bottom "Frequencey (MHz)"
 	RenameWindow #,G0
@@ -457,138 +457,138 @@ Function ConMatNMRSimPro_Master()
 
 	//General Parameters
 	TitleBox titlegnucleus,pos={60,5},size={77,40},fSize=30,frame=0
-	TitleBox titlegnucleus,variable= root:spectrumsimulation:System:gnucleus
+	TitleBox titlegnucleus,variable= root:ConMatNMRSimPro:System:gnucleus
 
 	SetVariable setvargatomicmass,pos={50,45},size={105,15},proc=SetVariableNucleus,title="Atomic Mass"
-	SetVariable setvargatomicmass,limits={1,inf,1},value= root:spectrumsimulation:System:gatomicmass
+	SetVariable setvargatomicmass,limits={1,inf,1},value= root:ConMatNMRSimPro:System:gatomicmass
 
 	SetVariable setvargspectrumnumber,pos={10,65},size={85,15},proc=SetVariableSpectrumNumber,title="Spectrum"
-	SetVariable setvargspectrumnumber,limits={1,inf,1},value= root:spectrumsimulation:System:gspectrumnumber
+	SetVariable setvargspectrumnumber,limits={1,inf,1},value= root:ConMatNMRSimPro:System:gspectrumnumber
 	
 	DrawText 97,79,"/"
 	SetDrawEnv fstyle= 5
 	ValDisplay valdispgspectrumcount,pos={100,65},size={50,13}
 	ValDisplay valdispgspectrumcount,limits={0,0,0},barmisc={0,1000},mode= 2	
-	ValDisplay valdispgspectrumcount,value= #"root:spectrumsimulation:system:gspectrumcount"	
+	ValDisplay valdispgspectrumcount,value= #"root:ConMatNMRSimPro:system:gspectrumcount"	
 	
 	CheckBox checkgspectrumon,pos={140,65},size={62,14},proc=SpectrumOnandDisplay,title="Calcualte?"
-	CheckBox checkgspectrumon,variable= root:spectrumsimulation:System:gspectrumon
+	CheckBox checkgspectrumon,variable= root:ConMatNMRSimPro:System:gspectrumon
 
 	SetVariable setvarggryo,pos={30,85},size={170,15},proc=SetVariableStats,title="\F'Symbol'g \F'Arial' (MHz/T)"
-	SetVariable setvarggryo,value= root:spectrumsimulation:System:ggyro
+	SetVariable setvarggryo,value= root:ConMatNMRSimPro:System:ggyro
 
 	SetVariable setvargII,pos={65,105},size={100,15},proc=SetVariableStats,title="Nuclear Spin"
-	SetVariable setvargII,value= root:spectrumsimulation:System:gII
+	SetVariable setvargII,value= root:ConMatNMRSimPro:System:gII
 	Button buttonTransitionPanel,pos={170,102},size={15,20},proc=TransitionPanelbutton,title="I"
 	
 	SetVariable setvargIntisity,pos={70,125},size={100,15},proc=SetVariableStats,title="Intensity"
-	SetVariable setvargIntisity,limits={0.001,inf,0.01},value= root:spectrumsimulation:System:gintensity
+	SetVariable setvargIntisity,limits={0.001,inf,0.01},value= root:ConMatNMRSimPro:System:gintensity
 
 	SetVariable setvargbaseline,pos={70,145},size={110,15},proc=SetVariableStats,title="Baseline"
-	SetVariable setvargbaseline,limits={0,inf,0.01},value= root:spectrumsimulation:System:gbaseline
+	SetVariable setvargbaseline,limits={0,inf,0.01},value= root:ConMatNMRSimPro:System:gbaseline
 
 	SetVariable setvargspectrumpoints,pos={168,7},size={160,15},title="Spectrum Points 100*10^"
-	SetVariable setvargspectrumpoints,value= root:spectrumsimulation:System:gspectrumpoints	
+	SetVariable setvargspectrumpoints,value= root:ConMatNMRSimPro:System:gspectrumpoints	
 
 	//Magnetic Paramters
 	DrawText 63,180,"Magnetic Parameters"
 	SetDrawEnv fstyle= 1
 	
 	SetVariable setvargKiso,pos={10,190},size={100,15},proc=SetVariableKvalues,title="K\Biso\M (%)"
-	SetVariable setvargKiso,value= root:spectrumsimulation:System:gKiso
+	SetVariable setvargKiso,value= root:ConMatNMRSimPro:System:gKiso
 	SetVariable setvargKaniso,pos={10,210},size={100,15},proc=SetVariableKvalues,title="K\Baniso\M (%)"
-	SetVariable setvargKaniso,value= root:spectrumsimulation:System:gKaniso
+	SetVariable setvargKaniso,value= root:ConMatNMRSimPro:System:gKaniso
 	SetVariable setvargepsilon,pos={10,230},size={100,15},proc=SetVariableKvalues,title="\F'Symbol'e"
-	SetVariable setvargepsilon,value= root:spectrumsimulation:System:gepsilon
+	SetVariable setvargepsilon,value= root:ConMatNMRSimPro:System:gepsilon
 	
 	SetVariable setvargKz,pos={115,190},size={100,15},proc=SetVariableKvalues,title="K\Bz\M (%)"
-	SetVariable setvargKz,value= root:spectrumsimulation:System:gKz
+	SetVariable setvargKz,value= root:ConMatNMRSimPro:System:gKz
 	SetVariable setvargKy,pos={115,210},size={100,15},proc=SetVariableKvalues,title="K\By\M (%)"
-	SetVariable setvargKy,value= root:spectrumsimulation:System:gKy
+	SetVariable setvargKy,value= root:ConMatNMRSimPro:System:gKy
 	SetVariable setvargKx,pos={115,230},size={100,15},proc=SetVariableKvalues,title="K\Bx\M (%)"
-	SetVariable setvargKx,value= root:spectrumsimulation:System:gKx
+	SetVariable setvargKx,value= root:ConMatNMRSimPro:System:gKx
 	
 	SetVariable setvargdvM,pos={50,250},size={100,15},proc=SetVariableStats,title="dv\BM\M (kHz)"
-	SetVariable setvargdvM,value= root:spectrumsimulation:System:gdVM
+	SetVariable setvargdvM,value= root:ConMatNMRSimPro:System:gdVM
 
 	DrawText 45,285,"Orietation relative to V\Bzz"
 	SetDrawEnv fstyle= 5
 		
 	SetVariable setvargthetaM,pos={50,290},size={100,15},proc=SetVariableStats,title="\F'Symbol'q \F'Arial'(deg)"
-	SetVariable setvargthetaM,value= root:spectrumsimulation:System:gthetaM
+	SetVariable setvargthetaM,value= root:ConMatNMRSimPro:System:gthetaM
 	SetVariable setvargPhiM,pos={50,310},size={100,15},proc=SetVariableStats,title="\F'Symbol'f \F'Arial'(deg)"
-	SetVariable setvargPhiM,value= root:spectrumsimulation:System:gphiM
+	SetVariable setvargPhiM,value= root:ConMatNMRSimPro:System:gphiM
 	
 	//QuadupolarParameters
 	DrawText 50,345,"Quadrupolar Parameters"
 	SetDrawEnv fstyle= 5
 	
 	SetVariable setvargvQ,pos={50,350},size={100,15},proc=SetVariableStats,title="v\BQ\M (MHz)"
-	SetVariable setvargvQ,value= root:spectrumsimulation:System:gvQ
+	SetVariable setvargvQ,value= root:ConMatNMRSimPro:System:gvQ
 	SetVariable setvargeta,pos={50,370},size={100,15},proc=SetVariableStats,title="\F'Symbol'h"
-	SetVariable setvargeta,value= root:spectrumsimulation:System:geta	
+	SetVariable setvargeta,value= root:ConMatNMRSimPro:System:geta	
 	SetVariable setvargdvQ,pos={50,390},size={100,15},proc=SetVariableStats,title="dv\BQ\M (kHz)"
-	SetVariable setvargdvQ,value= root:spectrumsimulation:System:gdvQ
+	SetVariable setvargdvQ,value= root:ConMatNMRSimPro:System:gdvQ
 
 	//AF parameters
 	DrawText 20,425,"Antiferromagnetic Parameters"
 	SetDrawEnv fstyle= 1
 	
 	SetVariable setvargvMAF,pos={50,430},size={100,15},proc=SetVariableStats,title="v\BMAF\M (MHz)"
-	SetVariable setvargvMAF,value= root:spectrumsimulation:System:gvMAF
+	SetVariable setvargvMAF,value= root:ConMatNMRSimPro:System:gvMAF
 	SetVariable setvargq,pos={50,450},size={100,15},proc=SetVariableStats,title="q (\F'Symbol'p\F'Arial'/2)"
-	SetVariable setvargq,value= root:spectrumsimulation:System:gq
+	SetVariable setvargq,value= root:ConMatNMRSimPro:System:gq
 	
 	DrawText 45,490,"Orietation relative to V\Bzz"
 	
 	SetVariable setvargthetaAF,pos={50,495},size={100,15},proc=SetVariableStats,title="\F'Symbol'q\F'Arial' (deg)"
-	SetVariable setvargthetaAF,value= root:spectrumsimulation:System:gthetaAF
+	SetVariable setvargthetaAF,value= root:ConMatNMRSimPro:System:gthetaAF
 	SetVariable setvargPhiAF,pos={50,515},size={100,15},proc=SetVariableStats,title="\F'Symbol'f\F'Arial' (deg)"
-	SetVariable setvargPhiAF,value= root:spectrumsimulation:System:gphiAF
+	SetVariable setvargPhiAF,value= root:ConMatNMRSimPro:System:gphiAF
 	
 	SetVariable setvargtotalqsteps,pos={35,545},size={160,15},title="q steps for AF spectrum"
-	SetVariable setvargtotalqsteps,value= root:spectrumsimulation:System:gtotalqsteps
+	SetVariable setvargtotalqsteps,value= root:ConMatNMRSimPro:System:gtotalqsteps
 
 	//Calculate and display
 
 	Button buttonCalculateSpectra,pos={54,613},size={120,20},proc=CalculateSpectra,title="Calculate Spectra"	
 	
 	CheckBox checkgspectrumdisplay,pos={90,645},size={54,14},proc=SpectrumOnandDisplay,title="Display?"
-	CheckBox checkgspectrumdisplay,variable= root:spectrumsimulation:System:gspectrumdisplay
+	CheckBox checkgspectrumdisplay,variable= root:ConMatNMRSimPro:System:gspectrumdisplay
 	CheckBox checkgspectrumsumdisplay,pos={90,665},size={120,14},proc=SpectrumOnandDisplay,title="Display Spectrum Sum?"
-	CheckBox checkgspectrumsumdisplay,variable= root:spectrumsimulation:System:gspectrumsumdisplay
+	CheckBox checkgspectrumsumdisplay,variable= root:ConMatNMRSimPro:System:gspectrumsumdisplay
 	
 	Button buttonDeleteSpectrum,pos={563,691},size={180,20},proc=DeleteCurrentSpectrum,title="Delete Current Spectrum"
 	Button buttonAutoScale,pos={972,687},size={80,20},proc=Autoscale,title="Auto Scale"
 
 	//Experiment Parameters
 	CheckBox checkgNQR,pos={180,45},size={36,14},proc=NQRFieldorFrequencySweep,title="NQR"
-	CheckBox checkgNQR,variable= root:spectrumsimulation:System:gNQR
+	CheckBox checkgNQR,variable= root:ConMatNMRSimPro:System:gNQR
 	CheckBox checkgfrequencysweep,pos={225,45},size={94,14},proc=NQRFieldorFrequencySweep,title="Frequency Sweep"
-	CheckBox checkgfrequencysweep,variable= root:spectrumsimulation:System:gfrequencysweep
+	CheckBox checkgfrequencysweep,variable= root:ConMatNMRSimPro:System:gfrequencysweep
 	CheckBox checkgfieldsweep,pos={225,65},size={69,14},proc=NQRFieldorFrequencySweep,title="Field Sweep"
-	CheckBox checkgfieldsweep,variable= root:spectrumsimulation:System:gfieldsweep
+	CheckBox checkgfieldsweep,variable= root:ConMatNMRSimPro:System:gfieldsweep
 
 	SetVariable setvargfield,pos={345,45},size={95,15},proc=SetFieldorFrequency,title="Field (T)"
-	SetVariable setvargfield,value= root:spectrumsimulation:System:gH0
+	SetVariable setvargfield,value= root:ConMatNMRSimPro:System:gH0
 	SetVariable setvargfrequency,pos={309,65},size={130,15},proc=SetFieldorFrequency,title="Frequency (MHz)"
-	SetVariable setvargfrequency,value= root:spectrumsimulation:System:gw0
+	SetVariable setvargfrequency,value= root:ConMatNMRSimPro:System:gw0
 		
 	CheckBox checkgsinglecrystal,pos={475,45},size={77,14},proc=SingleCrystalorPowder,title="Single Crystal"
-	CheckBox checkgsinglecrystal,variable= root:spectrumsimulation:System:gsinglecrystal
+	CheckBox checkgsinglecrystal,variable= root:ConMatNMRSimPro:System:gsinglecrystal
 	CheckBox checkgpowder,pos={475,65},size={50,14},proc=SingleCrystalorPowder,title="Powder"
-	CheckBox checkgpowder,variable= root:spectrumsimulation:System:gpowder
+	CheckBox checkgpowder,variable= root:ConMatNMRSimPro:System:gpowder
 		
 	SetVariable setvargangularsteps,pos={475,82},size={160,15},title="Angular steps for powder"
-	SetVariable setvargangularsteps,value= root:spectrumsimulation:System:gangularsteps
+	SetVariable setvargangularsteps,value= root:ConMatNMRSimPro:System:gangularsteps
 	
 	SetVariable setvargfieldsteps,pos={300,82},size={160,15},title="Field Steps for Field Sweep"
-	SetVariable setvargfieldsteps,value= root:spectrumsimulation:System:gfieldsteps	
+	SetVariable setvargfieldsteps,value= root:ConMatNMRSimPro:System:gfieldsteps	
 	
 	//Res/Eigen vs parameters
 
 	CheckBox checkcalculateresonancevsparam,pos={861,79},size={234,14},title="Calculate Resonance and Eigen values vs params?"
-	CheckBox checkcalculateresonancevsparam,variable= root:spectrumsimulation:System:gqandangdep
+	CheckBox checkcalculateresonancevsparam,variable= root:ConMatNMRSimPro:System:gqandangdep
 	
 	PopupMenu popupEandEigen,pos={878,51},size={176,20},proc=DisplayEorEigenPopup
 	PopupMenu popupEandEigen,mode=1,popvalue="Resonance vs Parameters",value= #"\"Resonance vs Parameters;Eigen values vs Parameters\""

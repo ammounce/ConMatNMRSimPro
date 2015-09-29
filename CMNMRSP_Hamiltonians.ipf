@@ -8,7 +8,7 @@
 Function MakeIz(s)
 	STRUCT Spectrum &s
 		
-	make/c/o/n=(2*s.II+1, 2*s.II+1) root:spectrumsimulation:system:Iz =0
+	make/c/o/n=(2*s.II+1, 2*s.II+1) root:ConMatNMRSimPro:system:Iz =0
 	variable i=0
 	do
 		s.Iz[i][i] = -s.II+i
@@ -21,7 +21,7 @@ End
 Function MakeI2(s)
 	STRUCT Spectrum &s
 		
-	make/c/o/n=(2*s.II+1, 2*s.II+1) root:spectrumsimulation:system:I2 =0
+	make/c/o/n=(2*s.II+1, 2*s.II+1) root:ConMatNMRSimPro:system:I2 =0
 	
 	variable i=0
 	
@@ -38,7 +38,7 @@ End
 Function MakeIplus(s)
 	STRUCT Spectrum &s
 		
-	make/c/o/n=(2*s.II+1, 2*s.II+1) root:spectrumsimulation:system:Iplus =0
+	make/c/o/n=(2*s.II+1, 2*s.II+1) root:ConMatNMRSimPro:system:Iplus =0
 	
 	variable i=-s.II
 	do
@@ -54,7 +54,7 @@ End
 Function MakeIminus(s)
 	STRUCT Spectrum &s
 		
-	make/c/o/n=(2*s.II+1, 2*s.II+1) root:spectrumsimulation:system:Iminus =0	
+	make/c/o/n=(2*s.II+1, 2*s.II+1) root:ConMatNMRSimPro:system:Iminus =0	
 	
 	variable i=-s.II+1
 	do
@@ -70,7 +70,7 @@ End
 Function MakeIx(s)
 	STRUCT Spectrum &s
 		
-	make/c/o/n=(2*s.II+1, 2*s.II+1) root:spectrumsimulation:system:Ix =0
+	make/c/o/n=(2*s.II+1, 2*s.II+1) root:ConMatNMRSimPro:system:Ix =0
 	
 	MakeIplus(s)
 	MakeIminus(s)
@@ -83,7 +83,7 @@ End
 Function MakeIy(s)
 	STRUCT Spectrum &s
 		
-	make/c/o/n=(2*s.II+1, 2*s.II+1) root:spectrumsimulation:system:Iy =0
+	make/c/o/n=(2*s.II+1, 2*s.II+1) root:ConMatNMRSimPro:system:Iy =0
 	
 	MakeIplus(s)
 	MakeIminus(s)
@@ -101,9 +101,9 @@ Function QuadrupolarHamiltonian(s)
 	MakeIplus(s)
 	MakeIminus(s)
 		
-	make/o/c/n=(2*s.II+1, 2*s.II+1)  root:spectrumsimulation:system:Iz2= 0
-	make/o/c/n=(2*s.II+1, 2*s.II+1)  root:spectrumsimulation:system:Iminus2= 0
-	make/o/c/n=(2*s.II+1, 2*s.II+1) root:spectrumsimulation:system:Iplus2= 0
+	make/o/c/n=(2*s.II+1, 2*s.II+1)  root:ConMatNMRSimPro:system:Iz2= 0
+	make/o/c/n=(2*s.II+1, 2*s.II+1)  root:ConMatNMRSimPro:system:Iminus2= 0
+	make/o/c/n=(2*s.II+1, 2*s.II+1) root:ConMatNMRSimPro:system:Iplus2= 0
 
 	MatrixMultiply s.Iz, s.Iz
 	s.Iz2 = s.product
@@ -114,7 +114,7 @@ Function QuadrupolarHamiltonian(s)
 	MatrixMultiply s.Iminus, s.Iminus
 	s.Iminus2= s.product
 
-	make/o/c/n=(2*s.II+1, 2*s.II+1)  root:spectrumsimulation:system:HQ=0
+	make/o/c/n=(2*s.II+1, 2*s.II+1)  root:ConMatNMRSimPro:system:HQ=0
  
 	s.HQ= s.vQ/6*(3*s.Iz2 - s.I2 + s.eta/2*(s.Iplus2+s.Iminus2))
 End	
@@ -124,7 +124,7 @@ Function ZeemanHamiltonian(s)
 	STRUCT Spectrum &s
 	
 	variable Kinv
-	make/o/c/n=(2*s.II+1, 2*s.II+1)  root:spectrumsimulation:system:HZ=0
+	make/o/c/n=(2*s.II+1, 2*s.II+1)  root:ConMatNMRSimPro:system:HZ=0
 	if(s.fieldsweep==0 || (s.fieldsweep ==1 && s.II>1/2))
 		s.Hz = s.gyro*s.fieldstep*(cos(pi*s.thetastep/180)*s.Iz*(1+s.Kz/100))
 		s.Hz+=s.gyro*s.fieldstep*sin(pi*s.thetastep/180)*cos(pi*s.phistep/180)*s.Ix*(1+s.Kx/100)
@@ -142,7 +142,7 @@ End
 Function AFHamiltonian(s)
 	STRUCT Spectrum &s
 	
-	make/o/c/n=(2*s.iI+1, 2*s.II+1)  root:spectrumsimulation:system:HAF=0
+	make/o/c/n=(2*s.iI+1, 2*s.II+1)  root:ConMatNMRSimPro:system:HAF=0
 			
 	s.HAF =s.vMAF*sin(pi/2*s.qstep*s.q)*cos(pi*s.thetaAF/180)*s.Iz
 	s.HAF+=s.vMAF*sin(pi/2*s.qstep*s.q)*sin(pi*s.thetaAF/180)*cos(pi*s.phiAF/180)*s.Ix
@@ -154,8 +154,8 @@ End
 //before this functoin
 Function TotalHamiltonian(s)
 	STRUCT Spectrum &s
-	SetDataFolder root:spectrumsimulation:system
-	make/o/c/n=(2*s.II+1, 2*s.II+1) root:spectrumsimulation:system:Htotal=0
+	SetDataFolder root:ConMatNMRSimPro:system
+	make/o/c/n=(2*s.II+1, 2*s.II+1) root:ConMatNMRSimPro:system:Htotal=0
 
 	ZeemanHamiltonian(s)
 	AFHamiltonian(s)

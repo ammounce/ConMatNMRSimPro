@@ -30,7 +30,7 @@ End
 Function InitTransitionIntensity(s)
 	STRUCT spectrum &s
 	
-	setdatafolder root:SpectrumSimulation:system
+	setdatafolder root:ConMatNMRSimPro:system
 	variable i, ii, transend
 			
 	if(mod(s.II, 1)!=0)
@@ -87,9 +87,9 @@ Function Storetransitions(s)
 
 	do
 		string onstring=transnamewave[i][0]
-		NVAR onvar=root:spectrumsimulation:system:$onstring
+		NVAR onvar=root:ConMatNMRSimPro:system:$onstring
 		string intstring=transnamewave[i][1]
-		NVAR intvar=root:spectrumsimulation:system:$intstring
+		NVAR intvar=root:ConMatNMRSimPro:system:$intstring
 		
 		s.nstats[i+36]=onvar
 		s.nstats[i+50]=intvar
@@ -128,108 +128,108 @@ Function TransitionsPanel_Master()
 	TitleBox titleintensity,win=$(spec.transpanelname), pos={118,5+intstate*23}
 		
 	CheckBox checkgt11_2,pos={10,55},size={79,14},proc=TransitionCheckbox,title="11/2 <-> 9/2"
-	CheckBox checkgt11_2,variable= root:SpectrumSimulation:system:gt11_2on, disable=halfintstate
+	CheckBox checkgt11_2,variable= root:ConMatNMRSimPro:system:gt11_2on, disable=halfintstate
 	CheckBox checkgt9_2,pos={10,75},size={73,14},proc=TransitionCheckbox,title="9/2 <-> 7/2"
-	CheckBox checkgt9_2,variable= root:SpectrumSimulation:system:gt9_2on, disable=halfintstate
+	CheckBox checkgt9_2,variable= root:ConMatNMRSimPro:system:gt9_2on, disable=halfintstate
 	CheckBox checkgt7_2,pos={10,95},size={73,14},proc=TransitionCheckbox,title="7/2 <-> 5/2"
-	CheckBox checkgt7_2,variable= root:SpectrumSimulation:system:gt7_2on, disable=halfintstate
+	CheckBox checkgt7_2,variable= root:ConMatNMRSimPro:system:gt7_2on, disable=halfintstate
 	CheckBox checkgt5_2,pos={10,115},size={73,14},proc=TransitionCheckbox,title="5/2 <-> 3/2"
-	CheckBox checkgt5_2,variable= root:SpectrumSimulation:system:gt5_2on, disable=halfintstate
+	CheckBox checkgt5_2,variable= root:ConMatNMRSimPro:system:gt5_2on, disable=halfintstate
 	CheckBox checkgt3_2,pos={10,135},size={73,14},proc=TransitionCheckbox,title="3/2 <-> 1/2"
-	CheckBox checkgt3_2,variable= root:SpectrumSimulation:system:gt3_2on, disable=halfintstate
+	CheckBox checkgt3_2,variable= root:ConMatNMRSimPro:system:gt3_2on, disable=halfintstate
 	CheckBox checkgt1_2,pos={10,155},size={77,14},proc=TransitionCheckbox,title="1/2 <-> -1/2"
-	CheckBox checkgt1_2,variable= root:SpectrumSimulation:system:gt1_2on, disable=halfintstate
+	CheckBox checkgt1_2,variable= root:ConMatNMRSimPro:system:gt1_2on, disable=halfintstate
 	CheckBox checkgtm1_2,pos={10,175},size={80,14},proc=TransitionCheckbox,title="-1/2 <-> -3/2"
-	CheckBox checkgtm1_2,variable= root:SpectrumSimulation:system:gtm1_2on, disable=halfintstate
+	CheckBox checkgtm1_2,variable= root:ConMatNMRSimPro:system:gtm1_2on, disable=halfintstate
 	CheckBox checkgtm3_2,pos={10,195},size={80,14},proc=TransitionCheckbox,title="-3/2 <-> -5/2"
-	CheckBox checkgtm3_2,variable= root:SpectrumSimulation:system:gtm3_2on, disable=halfintstate
+	CheckBox checkgtm3_2,variable= root:ConMatNMRSimPro:system:gtm3_2on, disable=halfintstate
 	CheckBox checkgtm5_2,pos={10,215},size={80,14},proc=TransitionCheckbox,title="-5/2 <-> -7/2"
-	CheckBox checkgtm5_2,variable= root:SpectrumSimulation:system:gtm5_2on, disable=halfintstate
+	CheckBox checkgtm5_2,variable= root:ConMatNMRSimPro:system:gtm5_2on, disable=halfintstate
 	CheckBox checkgtm7_2,pos={10,235},size={80,14},proc=TransitionCheckbox,title="-7/2 <-> -9/2"
-	CheckBox checkgtm7_2,variable= root:SpectrumSimulation:system:gtm7_2on, disable=halfintstate
+	CheckBox checkgtm7_2,variable= root:ConMatNMRSimPro:system:gtm7_2on, disable=halfintstate
 	CheckBox checkgtm9_2,pos={10,255},size={86,14},proc=TransitionCheckbox,title="-9/2 <-> -11/2"
-	CheckBox checkgtm9_2,variable= root:SpectrumSimulation:system:gtm9_2on, disable=halfintstate
+	CheckBox checkgtm9_2,variable= root:ConMatNMRSimPro:system:gtm9_2on, disable=halfintstate
 		
 	SetVariable setvargI11_2,pos={120,55},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI11_2,value= root:SpectrumSimulation:system:gI11_2, disable=halfintstate
+	SetVariable setvargI11_2,value= root:ConMatNMRSimPro:system:gI11_2, disable=halfintstate
 	SetVariable setvargI9_2,pos={120,75},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI9_2,value= root:SpectrumSimulation:system:gI9_2, disable=halfintstate
+	SetVariable setvargI9_2,value= root:ConMatNMRSimPro:system:gI9_2, disable=halfintstate
 	SetVariable setvargI7_2,pos={120,95},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI7_2,value= root:SpectrumSimulation:system:gI7_2, disable=halfintstate
+	SetVariable setvargI7_2,value= root:ConMatNMRSimPro:system:gI7_2, disable=halfintstate
 	SetVariable setvargI5_2,pos={120,115},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI5_2,value= root:SpectrumSimulation:system:gI5_2, disable=halfintstate
+	SetVariable setvargI5_2,value= root:ConMatNMRSimPro:system:gI5_2, disable=halfintstate
 	SetVariable setvargI3_2,pos={120,135},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI3_2,value= root:SpectrumSimulation:system:gI3_2, disable=halfintstate
+	SetVariable setvargI3_2,value= root:ConMatNMRSimPro:system:gI3_2, disable=halfintstate
 	SetVariable setvargI1_2,pos={120,155},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI1_2,value= root:SpectrumSimulation:system:gI1_2, disable=halfintstate
+	SetVariable setvargI1_2,value= root:ConMatNMRSimPro:system:gI1_2, disable=halfintstate
 	SetVariable setvargIm1_2,pos={120,175},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargIm1_2,value= root:SpectrumSimulation:system:gIm1_2, disable=halfintstate
+	SetVariable setvargIm1_2,value= root:ConMatNMRSimPro:system:gIm1_2, disable=halfintstate
 	SetVariable setvargIm3_2,pos={120,195},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargIm3_2,value= root:SpectrumSimulation:system:gIm3_2, disable=halfintstate
+	SetVariable setvargIm3_2,value= root:ConMatNMRSimPro:system:gIm3_2, disable=halfintstate
 	SetVariable setvargIm5_2,pos={120,215},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargIm5_2,value= root:SpectrumSimulation:system:gIm5_2, disable=halfintstate
+	SetVariable setvargIm5_2,value= root:ConMatNMRSimPro:system:gIm5_2, disable=halfintstate
 	SetVariable setvargIm7_2,pos={120,235},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargIm7_2,value= root:SpectrumSimulation:system:gIm7_2, disable=halfintstate
+	SetVariable setvargIm7_2,value= root:ConMatNMRSimPro:system:gIm7_2, disable=halfintstate
 	SetVariable setvargIm9_2,pos={120,255},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargIm9_2,value= root:SpectrumSimulation:system:gIm9_2, disable=halfintstate
+	SetVariable setvargIm9_2,value= root:ConMatNMRSimPro:system:gIm9_2, disable=halfintstate
 	
 	CheckBox checkgt7,pos={10,25},size={79,14},proc=TransitionCheckbox,title="7 <-> 6"
-	CheckBox checkgt7,variable= root:SpectrumSimulation:system:gt7on, disable=intstate
+	CheckBox checkgt7,variable= root:ConMatNMRSimPro:system:gt7on, disable=intstate
 	CheckBox checkgt6,pos={10,45},size={73,14},proc=TransitionCheckbox,title="6 <-> 5"
-	CheckBox checkgt6,variable= root:SpectrumSimulation:system:gt6on, disable=intstate
+	CheckBox checkgt6,variable= root:ConMatNMRSimPro:system:gt6on, disable=intstate
 	CheckBox checkgt5,pos={10,65},size={73,14},proc=TransitionCheckbox,title="5 <-> 4"
-	CheckBox checkgt5,variable= root:SpectrumSimulation:system:gt5on, disable=intstate
+	CheckBox checkgt5,variable= root:ConMatNMRSimPro:system:gt5on, disable=intstate
 	CheckBox checkgt4,pos={10,85},size={73,14},proc=TransitionCheckbox,title="4 <-> 3"
-	CheckBox checkgt4,variable= root:SpectrumSimulation:system:gt4on, disable=intstate
+	CheckBox checkgt4,variable= root:ConMatNMRSimPro:system:gt4on, disable=intstate
 	CheckBox checkgt3,pos={10,105},size={73,14},proc=TransitionCheckbox,title="3 <-> 2"
-	CheckBox checkgt3,variable= root:SpectrumSimulation:system:gt3on, disable=intstate
+	CheckBox checkgt3,variable= root:ConMatNMRSimPro:system:gt3on, disable=intstate
 	CheckBox checkgt2,pos={10,125},size={77,14},proc=TransitionCheckbox,title="2 <-> 1"
-	CheckBox checkgt2,variable= root:SpectrumSimulation:system:gt2on, disable=intstate
+	CheckBox checkgt2,variable= root:ConMatNMRSimPro:system:gt2on, disable=intstate
 	CheckBox checkgt1,pos={10,145},size={80,14},proc=TransitionCheckbox,title="1 <-> 0"
-	CheckBox checkgt1,variable= root:SpectrumSimulation:system:gt1on, disable=intstate
+	CheckBox checkgt1,variable= root:ConMatNMRSimPro:system:gt1on, disable=intstate
 	CheckBox checkgt0,pos={10,165},size={80,14},proc=TransitionCheckbox,title="0 <-> -1"
-	CheckBox checkgt0,variable= root:SpectrumSimulation:system:gt0on, disable=intstate
+	CheckBox checkgt0,variable= root:ConMatNMRSimPro:system:gt0on, disable=intstate
 	CheckBox checkgtm1,pos={10,185},size={80,14},proc=TransitionCheckbox,title="-1 <-> -2"
-	CheckBox checkgtm1,variable= root:SpectrumSimulation:system:gtm1on, disable=intstate
+	CheckBox checkgtm1,variable= root:ConMatNMRSimPro:system:gtm1on, disable=intstate
 	CheckBox checkgtm2,pos={10,205},size={80,14},proc=TransitionCheckbox,title="-2 <-> -3"
-	CheckBox checkgtm2,variable= root:SpectrumSimulation:system:gtm2on, disable=intstate
+	CheckBox checkgtm2,variable= root:ConMatNMRSimPro:system:gtm2on, disable=intstate
 	CheckBox checkgtm3,pos={10,225},size={86,14},proc=TransitionCheckbox,title="-3 <-> -4"
-	CheckBox checkgtm3,variable= root:SpectrumSimulation:system:gtm3on, disable=intstate
+	CheckBox checkgtm3,variable= root:ConMatNMRSimPro:system:gtm3on, disable=intstate
 	CheckBox checkgtm4,pos={10,245},size={86,14},proc=TransitionCheckbox,title="-4 <-> -5"
-	CheckBox checkgtm4,variable= root:SpectrumSimulation:system:gtm4on, disable=intstate
+	CheckBox checkgtm4,variable= root:ConMatNMRSimPro:system:gtm4on, disable=intstate
 	CheckBox checkgtm5,pos={10,265},size={86,14},proc=TransitionCheckbox,title="-5 <-> -6"
-	CheckBox checkgtm5,variable= root:SpectrumSimulation:system:gtm5on, disable=intstate
+	CheckBox checkgtm5,variable= root:ConMatNMRSimPro:system:gtm5on, disable=intstate
 	CheckBox checkgtm6,pos={10,285},size={86,14},proc=TransitionCheckbox,title="-6 <-> -7"
-	CheckBox checkgtm6,variable= root:SpectrumSimulation:system:gtm6on	, disable=intstate
+	CheckBox checkgtm6,variable= root:ConMatNMRSimPro:system:gtm6on	, disable=intstate
 	
 	SetVariable setvargI7,pos={120,25},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI7,value= root:SpectrumSimulation:system:gI7, disable=intstate
+	SetVariable setvargI7,value= root:ConMatNMRSimPro:system:gI7, disable=intstate
 	SetVariable setvargI6,pos={120,45},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI6,value= root:SpectrumSimulation:system:gI6, disable=intstate
+	SetVariable setvargI6,value= root:ConMatNMRSimPro:system:gI6, disable=intstate
 	SetVariable setvargI5,pos={120,65},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI5,value= root:SpectrumSimulation:system:gI5, disable=intstate
+	SetVariable setvargI5,value= root:ConMatNMRSimPro:system:gI5, disable=intstate
 	SetVariable setvargI4,pos={120,85},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI4,value= root:SpectrumSimulation:system:gI4, disable=intstate
+	SetVariable setvargI4,value= root:ConMatNMRSimPro:system:gI4, disable=intstate
 	SetVariable setvargI3,pos={120,105},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI3,value= root:SpectrumSimulation:system:gI3, disable=intstate
+	SetVariable setvargI3,value= root:ConMatNMRSimPro:system:gI3, disable=intstate
 	SetVariable setvargI2,pos={120,125},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI2,value= root:SpectrumSimulation:system:gI2, disable=intstate
+	SetVariable setvargI2,value= root:ConMatNMRSimPro:system:gI2, disable=intstate
 	SetVariable setvargI1,pos={120,145},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI1,value= root:SpectrumSimulation:system:gI1, disable=intstate
+	SetVariable setvargI1,value= root:ConMatNMRSimPro:system:gI1, disable=intstate
 	SetVariable setvargI0,pos={120,165},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargI0,value= root:SpectrumSimulation:system:gI0, disable=intstate
+	SetVariable setvargI0,value= root:ConMatNMRSimPro:system:gI0, disable=intstate
 	SetVariable setvargIm1,pos={120,185},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargIm1,value= root:SpectrumSimulation:system:gIm1, disable=intstate
+	SetVariable setvargIm1,value= root:ConMatNMRSimPro:system:gIm1, disable=intstate
 	SetVariable setvargIm2,pos={120,205},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargIm2,value= root:SpectrumSimulation:system:gIm2, disable=intstate
+	SetVariable setvargIm2,value= root:ConMatNMRSimPro:system:gIm2, disable=intstate
 	SetVariable setvargIm3,pos={120,225},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargIm3,value= root:SpectrumSimulation:system:gIm3, disable=intstate
+	SetVariable setvargIm3,value= root:ConMatNMRSimPro:system:gIm3, disable=intstate
 	SetVariable setvargIm4,pos={120,245},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargIm4,value= root:SpectrumSimulation:system:gIm4, disable=intstate
+	SetVariable setvargIm4,value= root:ConMatNMRSimPro:system:gIm4, disable=intstate
 	SetVariable setvargIm5,pos={120,265},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargIm5,value= root:SpectrumSimulation:system:gIm5, disable=intstate
+	SetVariable setvargIm5,value= root:ConMatNMRSimPro:system:gIm5, disable=intstate
 	SetVariable setvargIm6,pos={120,285},size={55,15},proc=TransitionIntensitySetVar,title=" "
-	SetVariable setvargIm6,value= root:SpectrumSimulation:system:gIm6, disable=intstate
+	SetVariable setvargIm6,value= root:ConMatNMRSimPro:system:gIm6, disable=intstate
 	
 EndMacro
 

@@ -9,7 +9,7 @@
 Function CalculateSpectra(ctrlname):Buttoncontrol
 	string ctrlname
 	
-	setdatafolder root:spectrumsimulation:system:
+	setdatafolder root:ConMatNMRSimPro:system:
 	
 	STRUCT Spectrum spec; ;initspectrum(spec)
 	
@@ -49,7 +49,7 @@ Function CalculateEnergylevels(s)
 		
 	if(s.H0==0 && s.fieldsweep==0)
 		if(s.vQ!=0 && s.VMAF==0)
-			make/o/n=(s.II-1/2) root:spectrumsimulation:system:energylevels=0
+			make/o/n=(s.II-1/2) root:ConMatNMRSimPro:system:energylevels=0
 			
 			do
 				s.Energylevels[i/2] = s.W_eigenvalues[i+2]-s.W_eigenvalues[i]
@@ -58,7 +58,7 @@ Function CalculateEnergylevels(s)
 		
 		elseif(s.VQ!=0 && s.VMAF!=0)
 		
-			make/o/n=((2*s.II-1)) root:spectrumsimulation:system:energylevels=0
+			make/o/n=((2*s.II-1)) root:ConMatNMRSimPro:system:energylevels=0
 
 			do
 				s.energylevels[i] = s.W_eigenvalues[i+2]-s.W_eigenvalues[i]
@@ -69,7 +69,7 @@ Function CalculateEnergylevels(s)
 		endif
 		
 	elseif(s.H0!=0 || s.fieldsweep==1)
-			make/o/n=(2*s.II) root:spectrumsimulation:system:energylevels=0
+			make/o/n=(2*s.II) root:ConMatNMRSimPro:system:energylevels=0
 			
 			if(mod(s.ii,1)!=0)
 				j=36+5-s.ii+1/2
@@ -101,7 +101,7 @@ End
 Function CalcSingleSpectrum(s)
 	STRUCT Spectrum &s
 	
-	make/o/n=(100*10^s.spectrumpoints+1) root:SpectrumSimulation:$(s.specname) =0
+	make/o/n=(100*10^s.spectrumpoints+1) root:ConMatNMRSimPro:$(s.specname) =0
 	
 	s.thetastep=0; s.phistep=0;s.qstep=0
 	
@@ -524,8 +524,8 @@ Function NMRspin12fieldsweeppowder(s)
 	
 	s.fieldstep=s.H0; s.thetastep=0;s.phistep = 0;s.qstep=0	
 		
-	make/o/n=(s.angularsteps, s.angularsteps) root:spectrumsimulation:system:thetawave=0
-	make/o/n=(s.angularsteps) root:spectrumsimulation:system:phiwave=0
+	make/o/n=(s.angularsteps, s.angularsteps) root:ConMatNMRSimPro:system:thetawave=0
+	make/o/n=(s.angularsteps) root:ConMatNMRSimPro:system:phiwave=0
 
 	variable i=0, j=0, k=0
 	do
@@ -561,9 +561,9 @@ Function NMRfieldsweepSC(s)
 	
 	s.qstep=0; s.thetastep=s.thetaM; s.phistep=s.phiM
 
-	make/o/n=(s.totalfieldsteps) root:spectrumsimulation:system:fieldsteps=0, root:spectrumsimulation:system:interpwave
-	make/o/n=(s.totalfieldsteps, s.II*2) root:spectrumsimulation:system:FSenergylevels=0
-	make/o/n=(s.totalfieldsteps) root:spectrumsimulation:system:w0wave
+	make/o/n=(s.totalfieldsteps) root:ConMatNMRSimPro:system:fieldsteps=0, root:ConMatNMRSimPro:system:interpwave
+	make/o/n=(s.totalfieldsteps, s.II*2) root:ConMatNMRSimPro:system:FSenergylevels=0
+	make/o/n=(s.totalfieldsteps) root:ConMatNMRSimPro:system:w0wave
 			
 	setscale/I x (s.w0/s.gyro-(s.ii-1/2)*s.vQ/s.gyro)*.95, (s.w0/s.gyro+(s.ii-1/2)*s.VQ/s.gyro)+(s.w0/s.gyro-(s.ii-1/2)*s.VQ/s.gyro)*.05, s.FSenergylevels, s.w0wave
 	s.fieldsteps= pnt2x(s.fsenergylevels, 0) + x* dimdelta(s.fsenergylevels, 0)
@@ -608,9 +608,9 @@ Function NMRfieldsweeppowder(s)
 	STRUCT Spectrum &s
 
 
-	make/o/n=(s.totalfieldsteps) root:spectrumsimulation:system:fieldsteps=0, root:spectrumsimulation:system:interpwave
-	make/o/n=(s.totalfieldsteps, s.II*2) root:spectrumsimulation:system:FSenergylevels=0
-	make/o/n=(s.totalfieldsteps) root:spectrumsimulation:system:w0wave
+	make/o/n=(s.totalfieldsteps) root:ConMatNMRSimPro:system:fieldsteps=0, root:ConMatNMRSimPro:system:interpwave
+	make/o/n=(s.totalfieldsteps, s.II*2) root:ConMatNMRSimPro:system:FSenergylevels=0
+	make/o/n=(s.totalfieldsteps) root:ConMatNMRSimPro:system:w0wave
 			
 	setscale/I x (s.w0/s.gyro-(s.ii-1/2)*s.vQ/s.gyro)*.95, (s.w0/s.gyro+(s.ii-1/2)*s.VQ/s.gyro)+(s.w0/s.gyro-(s.ii-1/2)*s.VQ/s.gyro)*.05, s.FSenergylevels, s.w0wave
 	s.fieldsteps= pnt2x(s.fsenergylevels, 0) + x* dimdelta(s.fsenergylevels, 0)
@@ -625,8 +625,8 @@ Function NMRfieldsweeppowder(s)
 		trans=50+7-s.II
 	endif
 				
-	make/o/n=(s.angularsteps, s.angularsteps) root:spectrumsimulation:system:thetawave=0
-	make/o/n=(s.angularsteps)  root:spectrumsimulation:system:phiwave=0
+	make/o/n=(s.angularsteps, s.angularsteps) root:ConMatNMRSimPro:system:thetawave=0
+	make/o/n=(s.angularsteps)  root:ConMatNMRSimPro:system:phiwave=0
 	
 	do			
 		do
@@ -678,18 +678,18 @@ Function  Calculateqandangledependence(s)
 	STRUCT Spectrum &s
 
 	variable i=0, j=0
-	make/o/n=(s.angularsteps, s.II*2) root:spectrumsimulation:energywaves:$("Energyvstheta"+num2istr(s.spectrumnumber)),root:spectrumsimulation:energywaves:$("Energyvsphi"+num2istr(s.spectrumnumber)),root:spectrumsimulation:energywaves:$("Energyvsthetaphi"+num2istr(s.spectrumnumber))
-	make/o/n=(s.angularsteps,s.II*2+1) root:spectrumsimulation:eigenwaves:$("Eigenvaluesvstheta"+num2istr(s.spectrumnumber)), root:spectrumsimulation:Eigenwaves:$("Eigenvaluesvsphi"+num2istr(s.spectrumnumber)), root:spectrumsimulation:Eigenwaves:$("Eigenvaluesvsthetaphi"+num2istr(s.spectrumnumber))
+	make/o/n=(s.angularsteps, s.II*2) root:ConMatNMRSimPro:energywaves:$("Energyvstheta"+num2istr(s.spectrumnumber)),root:ConMatNMRSimPro:energywaves:$("Energyvsphi"+num2istr(s.spectrumnumber)),root:ConMatNMRSimPro:energywaves:$("Energyvsthetaphi"+num2istr(s.spectrumnumber))
+	make/o/n=(s.angularsteps,s.II*2+1) root:ConMatNMRSimPro:eigenwaves:$("Eigenvaluesvstheta"+num2istr(s.spectrumnumber)), root:ConMatNMRSimPro:Eigenwaves:$("Eigenvaluesvsphi"+num2istr(s.spectrumnumber)), root:ConMatNMRSimPro:Eigenwaves:$("Eigenvaluesvsthetaphi"+num2istr(s.spectrumnumber))
 	initspectrum(s)
 	setscale/P x 0, 90/(s.angularsteps-1), s.nEvstheta, s.nEvsphi, s.nEvsthetaphi, s.nEVvstheta, s.nEVvsphi, s.nEVvsthetaphi
 
 	if(s.H0!=0)
-		make/o/n=(s.totalqsteps, s.II*2)  root:spectrumsimulation:energywaves:$("Energyvsq"+num2istr(s.spectrumnumber))
+		make/o/n=(s.totalqsteps, s.II*2)  root:ConMatNMRSimPro:energywaves:$("Energyvsq"+num2istr(s.spectrumnumber))
 	elseif(s.H0==0)
-		make/o/n=(s.totalqsteps, s.II-1/2)  root:spectrumsimulation:energywaves:$("Energyvsq"+num2istr(s.spectrumnumber))
+		make/o/n=(s.totalqsteps, s.II-1/2)  root:ConMatNMRSimPro:energywaves:$("Energyvsq"+num2istr(s.spectrumnumber))
 	endif
 	
-	make/o/n=(s.totalqsteps, s.II*2+1)  root:spectrumsimulation:eigenwaves:$("Eigenvaluesvsq"+num2istr(s.spectrumnumber))
+	make/o/n=(s.totalqsteps, s.II*2+1)  root:ConMatNMRSimPro:eigenwaves:$("Eigenvaluesvsq"+num2istr(s.spectrumnumber))
 	
 	if(s.frequencysweep==1 && s.H0!=0)
 			
@@ -728,8 +728,8 @@ Function  Calculateqandangledependence(s)
 		i=0; s.thetastep=0; s.phistep=0
 		
 	elseif(s.fieldsweep==1)
-		make/o/n=(s.totalfieldsteps) root:spectrumsimulation:system:fieldsteps=0
-		make/o/n=(s.totalfieldsteps, s.II*2) root:spectrumsimulation:system:FSenergylevels=0
+		make/o/n=(s.totalfieldsteps) root:ConMatNMRSimPro:system:fieldsteps=0
+		make/o/n=(s.totalfieldsteps, s.II*2) root:ConMatNMRSimPro:system:FSenergylevels=0
 
 		setscale/I x (s.w0/s.gyro-(s.ii-1/2)*s.vQ/s.gyro)*.95, (s.w0/s.gyro+(s.ii-1/2)*s.VQ/s.gyro)+(s.w0/s.gyro-(s.ii-1/2)*s.VQ/s.gyro)*.05, s.FSenergylevels
 		s.fieldsteps= pnt2x(s.fsenergylevels, 0) + x* dimdelta(s.fsenergylevels,0)
@@ -745,7 +745,7 @@ Function  Calculateqandangledependence(s)
 			while(i<dimsize(s.fieldsteps,0))
 			i=0
 					 
-			 make/o/n=(dimsize(s.fsenergylevels, 0)) root:SpectrumSimulation:system:interpwave
+			 make/o/n=(dimsize(s.fsenergylevels, 0)) root:ConMatNMRSimPro:system:interpwave
 				
 			do
 				s.interpwave = s.FSenergylevels[x][i]
@@ -823,8 +823,8 @@ Function  Calculateqandangledependence(s)
 		
 		s.thetastep=0; s.phistep=0; s.qstep=0
 		
-		make/o/n=(s.totalfieldsteps) root:spectrumsimulation:system:fieldsteps=0
-		make/o/n=(s.fieldsteps, s.II*2) root:spectrumsimulation:system:FSenergylevels=0
+		make/o/n=(s.totalfieldsteps) root:ConMatNMRSimPro:system:fieldsteps=0
+		make/o/n=(s.fieldsteps, s.II*2) root:ConMatNMRSimPro:system:FSenergylevels=0
 		
 		setscale/I x (s.w0/s.gyro-(s.ii-1/2)*s.vQ/s.gyro)*.95, (s.w0/s.gyro+(s.ii-1/2)*s.VQ/s.gyro)+(s.w0/s.gyro-(s.ii-1/2)*s.VQ/s.gyro)*.05, s.FSenergylevels
 		s.fieldsteps= pnt2x(s.fsenergylevels, 0) + x* dimdelta(s.fsenergylevels,0)
@@ -840,7 +840,7 @@ Function  Calculateqandangledependence(s)
 			while(i<dimsize(s.fieldsteps,0))
 			i=0
 					 
-			 make/o/n=(dimsize(s.fsenergylevels, 0)) root:SpectrumSimulation:system:interpwave
+			 make/o/n=(dimsize(s.fsenergylevels, 0)) root:ConMatNMRSimPro:system:interpwave
 				
 			do
 				s.interpwave = s.FSenergylevels[x][i]
@@ -875,7 +875,7 @@ Function CalculateResVsworH(s)
 	makeIy(s)	
 	
 	if(s.fieldsweep==1)
-		make/n=(300, s.ii*2)/o root:spectrumsimulation:WandHdep:$("ResvsHtheta"+num2str(s.spectrumnumber))=0,  root:spectrumsimulation:WandHdep:$("ResvsHphi"+num2str(s.spectrumnumber))=0,  root:spectrumsimulation:WandHdep:$("ResvsHthetaphi"+num2str(s.spectrumnumber))=0;initspectrum(s)
+		make/n=(300, s.ii*2)/o root:ConMatNMRSimPro:WandHdep:$("ResvsHtheta"+num2str(s.spectrumnumber))=0,  root:ConMatNMRSimPro:WandHdep:$("ResvsHphi"+num2str(s.spectrumnumber))=0,  root:ConMatNMRSimPro:WandHdep:$("ResvsHthetaphi"+num2str(s.spectrumnumber))=0;initspectrum(s)
 		setscale/i x .1, 100, s.nresvshtheta, s.nresvshphi, s.nresvshthetaphi
 		
 		s.thetastep=0;s.phistep=0
