@@ -9,8 +9,6 @@
 #include ":CMNMRSP_Transitions"
 #include ":CMNMRSP_Calculate"
 
-//9/28/2105 AMM 
-
 //This function will initialize the ConMatNMRSimPro software by making variables, waves, strings
 // folder ect, then checking the status of the ConMatSimNMRPro main panel
 // This macro can be called again in order to reinitialized the variables

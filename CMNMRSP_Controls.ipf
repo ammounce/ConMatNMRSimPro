@@ -1,5 +1,8 @@
 #pragma rtGlobals=3		// Use modern global access method and strict wave access.
+#pragma version = 0.2
+#pragma IgorVersion = 6.37
 
+//Autoscales main spectrum display
 Function Autoscale(ctrlname):ButtonControl
 	string ctrlname
 	
@@ -8,7 +11,8 @@ Function Autoscale(ctrlname):ButtonControl
 	SetAxis/A/W=$(spec.specwindow) 
 End
 
-
+//Turns display of single spectrum on or off
+//Turns spectrum sum mode on or off
 Function SpectrumOnandDisplay(ctrlName,checked) : CheckBoxControl
 	String ctrlName
 	Variable checked			// 1 if selected, 0 if not
@@ -87,7 +91,8 @@ Function SpectrumOnandDisplay(ctrlName,checked) : CheckBoxControl
 	
 ENd	
 
-
+//Calculates spectrum sum depending on which spectra are turned on, normalizes sum to intensity
+//and applies baselining
 Function CalculateSpectrumSum(s)
 	STRUCT spectrum &s		
 	variable initialspectrumnumber=s.spectrumnumber
@@ -128,6 +133,8 @@ Function CalculateSpectrumSum(s)
 	loadspectrumdata(s)	
 End
 
+//Controls check boxes for experiment types NQR, Frequency sweep, or fieldsweep
+//appropriately changes other boxes appropriately
 Function NQRFieldorFrequencySweep(ctrlName,checked) : CheckBoxControl
 	String ctrlName
 	Variable checked			// 1 if selected, 0 if not
@@ -169,9 +176,9 @@ Function NQRFieldorFrequencySweep(ctrlName,checked) : CheckBoxControl
 
 	storespectrumdata(spec)
 	changestatforallspectra(spec)
-
 End
 
+//Controls Single crystal or powder checkboxes, both being mutually exclusive
 Function SingleCrystalorPowder(ctrlName,checked) : CheckBoxControl
 	String ctrlName
 	Variable checked			// 1 if selected, 0 if not
@@ -195,6 +202,7 @@ STRUCT spectrum spec; InitSpectrum(spec)
 	changestatforallspectra(spec)
 End
 
+//If field or frequency is changed, sets appropriate expeirment type indicator
 Function SetFieldorFrequency(ctrlName,varNum,varStr,varName) : SetVariableControl
 	String ctrlName
 	Variable varNum	// value of variable as number
@@ -222,6 +230,10 @@ STRUCT spectrum spec; InitSpectrum(spec)
 	
 End
 
+//General set variable control for spectrum parameters
+//Changes experiment indicator depending on freq. or field change
+//Changes baseline of all spectra and spectrum sum
+//Changes intensity of current spectrum and spectrum su
 Function SetVariableStats(ctrlName,varNum,varStr,varName) : SetVariableControl
 	String ctrlName
 	Variable varNum	// value of variable as number
@@ -274,6 +286,9 @@ Function SetVariableStats(ctrlName,varNum,varStr,varName) : SetVariableControl
 	
 End
 
+//Sets the nucleus when atomic number is entered
+//Popup window if atomic number is degenerate
+//If arrows are used, atomatically chooses the next valid atomic number
 Function SetVariableNucleus(ctrlName,varNum,varStr,varName) : SetVariableControl
 	String ctrlName
 	Variable varNum	// value of variable as number
@@ -385,6 +400,9 @@ Function SetVariableNucleus(ctrlName,varNum,varStr,varName) : SetVariableControl
 	
 End
 
+//Changes spectrum to control
+//If spectrum number is greater than total number of spectra, gives option to make new spectrum
+//New spectrum has the same stats as the previous one
 Function SetVariableSpectrumNumber(ctrlName,varNum,varStr,varName) : SetVariableControl
 	String ctrlName
 	Variable varNum	// value of variable as number
@@ -417,7 +435,7 @@ Function SetVariableSpectrumNumber(ctrlName,varNum,varStr,varName) : SetVariable
 	Changetranspanel(spec)	
 End
 
-
+//If a K value is set, changes the K values in the other basis
 Function SetVariableKvalues(ctrlName,varNum,varStr,varName) : SetVariableControl
 	String ctrlName
 	Variable varNum	// value of variable as number
@@ -443,6 +461,9 @@ Function SetVariableKvalues(ctrlName,varNum,varStr,varName) : SetVariableControl
 	StoreSpectrumData(spec)
 End	
 	
+//Deletes the current spectrum and all associated waves
+//Currently can only delete the last spectrum? Need to move the spectrum number down if the spectrum
+//is in the middle of the spread
 Function DeleteCurrentSpectrum(ctrlname):ButtonControl
 	string ctrlname
 	
@@ -480,6 +501,7 @@ Function DeleteCurrentSpectrum(ctrlname):ButtonControl
 	
 End
 
+//Saves single spectrum and stats
 Function SaveCurrentSpectrum(ctrlname):ButtonControl
 	string ctrlname
 	
@@ -509,6 +531,7 @@ Function SaveCurrentSpectrum(ctrlname):ButtonControl
 	
 End
 
+//Changes specific stats for all spectra
 Function changestatforallspectra(s)
 	STRUCT spectrum &s
 
@@ -528,6 +551,7 @@ Function changestatforallspectra(s)
 
 end
 
+//Loads waves and data preaviously saved
 Function LoadWaveandData(ctrlName,popNum,popStr) : PopupMenuControl
 	String ctrlName
 	Variable popNum	// which item is currently selected (1-based)
@@ -865,9 +889,9 @@ End
 		
 End
 
-
-
-
+//Checks if transitions panel is open
+//If open, brings to front
+//If not open, opens
 Function TransitionPanelbutton(ctrlname):Buttoncontrol
 	string ctrlname
 	
