@@ -91,6 +91,11 @@ Function InitializeConMatNMRSimPro()
 		
 End
 
+
+//Stores stats entered into main window into statswave for current spectrum number
+//As of version 0.2 the first 37 stats are non-transition related stats
+//Stats from 37 to 50 are trasition on parameters
+//Stats from 51 to 55 are transition intensity parameters
 Function StoreSpectrumData(s)
 	STRUCT spectrum &s
 		
@@ -128,7 +133,10 @@ Function StoreSpectrumData(s)
 		
 End
 
-
+//Loads stats from stats wave into global variables to be displayed on main panel
+//As of version 0.2 the first 37 stats are non-transition related stats
+//Stats from 37 to 50 are trasition on parameters
+//Stats from 51 to 55 are transition intensity parameters
 
 Function LoadSpectrumData(s)
 	STRUCT spectrum &s
@@ -170,7 +178,7 @@ Function LoadSpectrumData(s)
 	s.nucleus=s.NucleusName[s.atomicmass][s.altatomicmass]	
 end
 
-
+//Makes wave that contains spin by atomic mass
 Function MakeNuclearSpinWave()
 
 	make/o/n=(244,2) NuclearSpin
@@ -192,6 +200,7 @@ NuclearSpin[189][0]=1.5;NuclearSpin[191][0]=1.5;NuclearSpin[193][0]=1.5;NuclearS
   NuclearSpin[205][0]=0.5;NuclearSpin[207][0]=0.5;NuclearSpin[209][0]=4.5;NuclearSpin[235][0]=3.5;NuclearSpin[239][0]=0.5;
 End
 
+//Makes wave that contains gyromagnetic ratio by atomic mass
 Function MakeNuclearGyroWave()
 
 	make/o/n=(242,2) NuclearGyro
@@ -215,6 +224,7 @@ Nucleargyro[189][0]=3.3063;Nucleargyro[191][0]=0.73191;Nucleargyro[193][0]=0.796
   Nucleargyro[203][0]=24.327;Nucleargyro[205][0]=24.567;Nucleargyro[207][0]=8.874;Nucleargyro[209][0]=6.8418;Nucleargyro[235][0]=0.7623;Nucleargyro[239][0]=2.39;
 End
 
+//Makes wave that contains name of nucleus by atomic mass
 Function MakeNucleusNameWave()
 
 	make/t/o/n=(242,2) NucleusName
@@ -237,6 +247,7 @@ NucleusName[177][0]="177Hf";NucleusName[179][0]="179Hf";NucleusName[181][0]="181
 NucleusName[203][0]="203Tl";NucleusName[205][0]="205Tl";NucleusName[207][0]="207Pb";NucleusName[209][0]="209Bi";NucleusName[235][0]="235U";NucleusName[239][0]="239Pu";
 End
 
+//Makes wave that stores the variable names for main calculation stats
 Function Makevariablewave()
 
 	make/t/o/n=(36) root:spectrumsimulation:system:statsnamewave
@@ -412,7 +423,12 @@ Function Samestring(string1, string2)
 	endif
 End
 
-	
+//Creates Panel which will have all the controls and the main spectrum graph, if saved over recreate with:
+//	PauseUpdate; Silent 1		// building window...
+//	NewPanel /W=(0,0,1100,720)
+//	ShowInfo/W=ConMatNMRSimPro
+//	SetDrawLayer UserBack
+
 Window ConMatNMRSimPro() : Panel
 
 	PauseUpdate; Silent 1		// building window...
@@ -425,6 +441,7 @@ Window ConMatNMRSimPro() : Panel
 End
 	
 
+//Creates controls and main graph
 Function ConMatNMRSimPro_Master()
 	
 	SetDataFolder root:SpectrumSimulation:
@@ -583,6 +600,8 @@ Function ConMatNMRSimPro_Master()
 	PopupMenu popupLoadgroupSpectrumandDat,pos={814,4},size={346,20},proc=LoadDataPopup,title="Load Group of Spectra and Data"
 	PopupMenu popupLoadgroupSpectrumandDat,mode=7,popvalue="",value= #"Listofwavesinfolder()"
 End
+
+
 
 Window ResonancevsParameterPanel() : Panel
 	PauseUpdate; Silent 1		// building window...
