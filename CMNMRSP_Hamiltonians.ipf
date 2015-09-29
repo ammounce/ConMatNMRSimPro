@@ -1,5 +1,8 @@
 #pragma rtGlobals=3		// Use modern global access method and strict wave access.
+#pragma version = 0.2
+#pragma IgorVersion = 6.37
 
+//Iz matrix
 Function MakeIz(s)
 	STRUCT Spectrum &s
 		
@@ -12,6 +15,7 @@ Function MakeIz(s)
 
 End 
 
+//I^2 matrix
 Function MakeI2(s)
 	STRUCT Spectrum &s
 		
@@ -28,6 +32,7 @@ Function MakeI2(s)
 	
 End
 
+//I+ matrix
 Function MakeIplus(s)
 	STRUCT Spectrum &s
 		
@@ -43,6 +48,7 @@ Function MakeIplus(s)
 	
 End
 
+//I- matrix
 Function MakeIminus(s)
 	STRUCT Spectrum &s
 		
@@ -58,6 +64,7 @@ Function MakeIminus(s)
 	
 End
 
+//Ix matrix, made from sum of I+ and I-
 Function MakeIx(s)
 	STRUCT Spectrum &s
 		
@@ -70,6 +77,7 @@ Function MakeIx(s)
 	
 End
 
+//Iy matrix made from I+ and I-
 Function MakeIy(s)
 	STRUCT Spectrum &s
 		
@@ -82,6 +90,7 @@ Function MakeIy(s)
 
 End
 
+//Quad Hamiltonian, calculates Iz^2, I+^2, I-^2, only depends on vQ and eta
 Function QuadrupolarHamiltonian(s)
 	STRUCT Spectrum &s
 		
@@ -108,7 +117,7 @@ Function QuadrupolarHamiltonian(s)
 	s.HQ= s.vQ/6*(3*s.Iz2 - s.I2 + s.eta/2*(s.Iplus2+s.Iminus2))
 End	
 
-
+//Zeeman Hamiltonian, calculated form gamma, thetaM, phiM, Kx, Ky, Kz, and H0
 Function ZeemanHamiltonian(s)
 	STRUCT Spectrum &s
 	
@@ -126,7 +135,8 @@ Function ZeemanHamiltonian(s)
 	
 End
 
-
+//AF Hamiltonian with ability to have different angle than Zeeman Hamiltonian
+//Calculated by vMAF, q, and angles relative to Vzz
 Function AFHamiltonian(s)
 	STRUCT Spectrum &s
 	
@@ -138,6 +148,8 @@ Function AFHamiltonian(s)
 	
 End
 
+//Calculates sum of Hamiltonians. Quadrupolar Hamiltonian is independent of H, w, angle, q, ect. therefore is calculated 
+//before this functoin
 Function TotalHamiltonian(s)
 	STRUCT Spectrum &s
 	SetDataFolder root:spectrumsimulation:system
